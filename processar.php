@@ -4,36 +4,38 @@
  * Autor: Peterson Passos
  * peterson.jfp@gmail.com
  * 51 9921298121
+ * 
+ * Modificado por: Girol | andregirol@gmail.com
  */
-$getpost = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-$dados2 = $getpost['txt'];
-$dados = array_map('trim', explode(',', $dados2));
-$classe = $getpost['nome'];
-$classeM = strtolower($classe);
-$numVars = count($dados);
-$s = "\n\n";
 
-/* ########################################################### */
-/*             formularios html com classes booststrap        */
-/* ########################################################### */
-$s .= "<!-- ############# formulario de cadastro #################### -->";
-$s .= "\n\n";
-$s .= "<h1 class='text-uppercase'>Cadastrar $classeM</h1>";
-$s .= "\n";
-$s .= "<form method='post' id='form_cadastrar_"."$classeM'>";
-$s .= "\n";
-$s .= '<fieldset>';
-$s .= "\n";
-foreach ($dados as $dado) {
-  $dado2 = ucfirst($dado);
-  $dado3 = str_replace('_', ' ', $dado2);
-  $s .= "<!-- $dado3 -->
-        <div class='form-group'>
-          <label class='control-label' for='$dado'>$dado3</label>
-          <input id='$dado' name='$dado' type='text' placeholder='$dado3' class='form-control input-md' required>
-        </div>";
-  $s .= "\n\n";
-}
+require('funcoes.php');
+
+$getpost = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+//$dados2 = $getpost['atributos'];
+
+var_dump($getpost);
+
+// Busca os atributos preenchidos pelo usuário e transforma em array
+$atributos = array_map('trim', explode(',', $getpost['atributos']));
+
+// Melhor deixar tudo minúsculo, e colocar maiúsculo quando precisar
+$nome_classe = strtolower($getpost['nome']);
+
+// Mantendo retrocompatibilidade com código antigo
+$classeM = $nome_classe; 
+//$numVars = count($dados); -- substituído porlinha abaixo
+$num_atributos = count($atributos);
+// $s = "\n\n";
+
+?>
+
+
+
+<?php 
+make_form($nome_classe, $atributos);
+exit('refactor do formulario');
+
+## inicio botão do form
 $s .= "<br><button type='submit' class='btn btn-lg btn-primary'>Publicar</button>";
 $s .= "\n\n";
 $s .= "</fieldset>";
@@ -189,6 +191,8 @@ $s .= "\n\n";
 $s .= "<!-- ######### fim formulario de edição #################### -->";
 $s .= "\n\n\n";
 
+
+
 /* ########################################################### */
 /* metodos do controller que receberao os post dos formularios */
 /* ########################################################### */
@@ -205,7 +209,7 @@ $s .= '$sucesso = '."$classe"."_model::" . "create" . "$classe(";
 $cont0 = 1;
 foreach ($dados as $dado) {
   $s .= '$' . "$dado";
-  if ($cont0 < $numVars) {
+  if ($cont0 < $num_atributos) {
     $s .= ", ";
   }
   $cont0++;
@@ -276,7 +280,7 @@ $s .= '$id,';
 $cont00 = 1;
 foreach ($dados as $dado) {
   $s .= '$' . "$dado";
-  if ($cont00 < $numVars) {
+  if ($cont00 < $num_atributos) {
     $s .= ", ";
   }
   $cont00++;
@@ -405,7 +409,7 @@ $s .= "  public static function insert" . "$classe(";
 $cont = 1;
 foreach ($dados as $dado) {
   $s .= '$' . "$dado";
-  if ($cont < $numVars) {
+  if ($cont < $num_atributos) {
     $s .= ", ";
   }
   $cont++;
@@ -424,7 +428,7 @@ $s .= "\n          ";
 $cont2 = 1;
 foreach ($dados as $dado) {
   $s .= "$dado";
-  if ($cont2 < $numVars) {
+  if ($cont2 < $num_atributos) {
     $s .= ", ";
   }
   $cont2++;
@@ -436,7 +440,7 @@ $s .= "      VALUES(";
 $cont3 = 1;
 foreach ($dados as $dado) {
   $s .= "?";
-  if ($cont3 < $numVars) {
+  if ($cont3 < $num_atributos) {
     $s .= ", ";
   }
   $cont3++;
@@ -517,7 +521,7 @@ $s .= '  public static function update' . "$classe" . '($id, ';
 $cont6 = 1;
 foreach ($dados as $dado) {
   $s .= '$' . "$dado";
-  if ($cont6 < $numVars) {
+  if ($cont6 < $num_atributos) {
     $s .= ", ";
   }
   $cont6++;
@@ -530,7 +534,7 @@ $s .= '    $select = $con->prepare("UPDATE ' . "`$classeM`" . ' SET ' . "\n    "
 $cont7 = 1;
 foreach ($dados as $dado) {
   $s .= "`$dado` = :$dado";
-  if ($cont7 < $numVars) {
+  if ($cont7 < $num_atributos) {
     $s .= ", ";
   }
   $cont7++;
@@ -672,7 +676,7 @@ $s .= '    $select = $con->prepare("UPDATE ' . "`$classeM`" . ' SET ' . "\n    "
 $cont12 = 1;
 foreach ($dados as $dado) {
   $s .= "`$dado` = :$dado";
-  if ($cont12 < $numVars) {
+  if ($cont12 < $num_atributos) {
     $s .= ", ";
   }
   $cont12++;
@@ -737,7 +741,7 @@ foreach ($dados as $dado) {
 $s .= '}';
 $s .= "\n\n";
 $s .= "<!-- ########## fim classe php ################### -->";
-echo "<div style='display:none'>";
+echo "<div >";
 var_dump($s);
 echo "</div>";
 echo "<h1>Por favor visualize o codigo fonte da pagina</h1>";
