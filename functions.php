@@ -1,38 +1,41 @@
 <?php
-/*
+	/*
 	* Autor: Peterson Passos
 	* peterson.jfp@gmail.com
 	* 51 9921298121
+	* 
+	* Modificado por: Girol | andregirol@gmail.com
 	*/
 
-function	make_forms($nome_classe,	$atributos)	{
-		make_insert_form($nome_classe,	$atributos);
-		$s	=	make_edit_form($nome_classe,	$atributos);
-		return	$s;
+function make_forms($nome_classe, $atributos) {
+		make_insert_form($nome_classe, $atributos);
+		$s = make_edit_form($nome_classe, $atributos);
+		return $s;
 }
 
-function	make_insert_form($nome_classe,	$atributos)	{
-		?>
+function make_insert_form($nome_classe,	$atributos){ ?>
 		<!-- ############# formulario de cadastro #################### -->
 
-		<h1 class='text-uppercase'>Cadastrar <?=	$nome_classe	?></h1>
+		<h1 class='text-uppercase'>Cadastrar <?= $nome_classe ?></h1>
 		<form method='post' action="####################">
-				<fieldset>
-						<?php
-						foreach	($atributos	as	$atributo):
-								$nome_do_atributo	=	str_replace('_',	' ',	ucfirst($atributo));
-								?>
-								<!-- <?=	$nome_do_atributo	?> -->
-								<div class='form-group'>
-										<label class='control-label' for='<?=	$atributo	?>'><?=	$nome_do_atributo	?></label>
-										<input id='<?=	$atributo	?>' name='<?=	$atributo	?>' type='text' placeholder='<?=	$nome_do_atributo	?>' class='form-control input-md' required>
-								</div>
-						<?php	endforeach;	?>
+			<fieldset>
+					<?php
+					foreach	($atributos	as	$atributo):
+							$nome_do_atributo = str_replace('_', ' ', ucfirst($atributo));
+							?>
+							<!-- <?= $nome_do_atributo ?> -->
+							<div class='form-group'>
+								<label class='control-label' for='<?= $atributo	?>'>
+									<?=	$nome_do_atributo ?>
+								</label>
+								<input id='<?=	$atributo	?>' name='<?= $atributo	?>' type='text' placeholder='<?= $nome_do_atributo ?>' class='form-control input-md' required>
+							</div>
+					<?php endforeach; ?>
 
-						<br>
-						<button type='submit' class='btn btn-lg btn-primary'>Publicar</button>
+					<br>
+					<button type='submit' class='btn btn-lg btn-primary'>Publicar</button>
 
-				</fieldset>
+			</fieldset>
 		</form>
 
 		<!-- ######### fim formulario de cadastro #################### -->
