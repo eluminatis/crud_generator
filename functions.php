@@ -345,29 +345,21 @@ function	make_edit_method($nome_classe,	$atributos,	$numVars)	{
 }
 
 function	make_sql($nome_classe,	$atributos)	{
-		$s	=	'';
-		$s	.=	"<!-- ##### sql para criar a tabela ########## -->";
-		$s	.=	"\n\n";
-		$s	.=	"CREATE TABLE `"	.	strtolower($nome_classe)	.	"`";
-		$s	.=	"\n";
-		$s	.=	"(";
-		$s	.=	"\n";
-		$s	.=	"`id` INT NOT NULL AUTO_INCREMENT,";
-		$s	.=	"\n";
+		echo "<p><!-- ##### sql para criar a tabela ########## --></p>";
+		echo	'
+				<p>CREATE TABLE `'.	strtolower($nome_classe)	.'`</p>
+				<p>(</p>
+				<p>`id` INT NOT NULL AUTO_INCREMENT,</p>';
+		echo	"\n";
 		foreach	($atributos	as	$atributo)	{
-				$s	.=	"`$atributo` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,";
-				$s	.=	"\n";
+				echo	"<p>				`$atributo` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,</p>";
 		}
-		$s	.=	"PRIMARY KEY (`id`)";
-		$s	.=	"\n";
-		$s	.=	")";
-		$s	.=	"\n";
-		$s	.=	"ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;";
-		$s	.=	"\n\n";
-		$s	.=	"<!-- ##### fim sql para criar a tabela ########### -->";
-		$s	.=	"\n\n\n";
-
-		return	$s;
+		echo '
+				<p>PRIMARY KEY (`id`)</p>
+				<p>)</p>
+				<p>ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;</p>
+				';
+		echo "<p><!-- ##### fim sql para criar a tabela ########### --></p>";
 }
 
 function	make_class($nome_classe,	$atributos,	$numVars)	{

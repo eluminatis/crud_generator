@@ -25,7 +25,7 @@ $num_atributos = count($atributos);
 $s = "\n\n";
 
 //div com display none para não ficar aquela bagunça na tela
-echo "<div style='display:none'>";
+echo "<div >";
 
 /* formularios html com classes booststrap */
 $s .= make_forms($nome_classe, $atributos);
