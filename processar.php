@@ -24,6 +24,9 @@ $num_atributos = count($atributos);
 //iniciando a var $s, depois a gente remove essa gambi de var e cada metodo dara seus echo's
 $s = "\n\n";
 
+//div com display none para não ficar aquela bagunça na tela
+echo "<div style='display:none'>";
+
 /* formularios html com classes booststrap */
 $s .= make_forms($nome_classe, $atributos);
 
@@ -35,9 +38,6 @@ $s .= make_sql($nome_classe, $atributos);
 
 /*  classe php contendo os atributos do formulario */
 $s .= make_class($nome_classe,	$atributos, $num_atributos);
-
-//div com display none para não ficar aquela bagunça na tela
-echo "<div style='display:none'>";
 
 //jogando o codigo gerado na tela
 var_dump($s);

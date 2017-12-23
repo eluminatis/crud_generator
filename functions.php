@@ -1,5 +1,4 @@
 <?php
-
 /*
 	* Autor: Peterson Passos
 	* peterson.jfp@gmail.com
@@ -7,189 +6,186 @@
 	*/
 
 function	make_forms($nome_classe,	$atributos)	{
-		$s	=	make_insert_form($nome_classe,	$atributos);
-		$s	.=	make_edit_form($nome_classe,	$atributos);
+		make_insert_form($nome_classe,	$atributos);
+		$s	=	make_edit_form($nome_classe,	$atributos);
 		return	$s;
 }
 
-function make_insert_form($nome_classe,	$atributos){
-		$s	=	' ';
-		$s	.=	"<!-- ############# formulario de cadastro #################### -->";
-		$s	.=	"\n\n";
-		$s	.=	"<h1 class='text-uppercase'>Cadastrar "	.	strtolower($nome_classe)	.	"</h1>";
-		$s	.=	"\n";
-		$s	.=	"<form method='post' id='form_cadastrar_"	.	""	.	strtolower($nome_classe)	.	"'>";
-		$s	.=	"\n";
-		$s	.=	'<fieldset>';
-		$s	.=	"\n";
-		foreach	($atributos	as	$atributo)	{
-				$nome_do_atributo	=	str_replace('_',	' ',	ucfirst($atributo));
-				$s	.=	"                <!-- $nome_do_atributo -->
-                <div class='form-group'>
-                    <label class='control-label' for='$atributo'>$nome_do_atributo</label>
-                    <input id='$atributo' name='$atributo' type='text' placeholder='$nome_do_atributo' class='form-control input-md' required>
-                </div>";
-				$s	.=	"\n\n";
-		}
-		$s	.=	"<br><button type='submit' class='btn btn-lg btn-primary'>Publicar</button>";
-		$s	.=	"\n\n";
-		$s	.=	"</fieldset>";
-		$s	.=	"\n";
-		$s	.=	"</form>";
-		$s	.=	"\n";
-		$s	.=	"<br>";
-		$s	.=	"\n";
-		$s	.=	"<div class='container'>";
-		$s	.=	"\n";
-		$s	.=	"    <div class='row'>";
-		$s	.=	"\n";
-		$s	.=	"        <div id='resposta'></div>";
-		$s	.=	"\n";
-		$s	.=	"    </div>";
-		$s	.=	"\n";
-		$s	.=	"</div>";
-		$s	.=	"\n";
-		$s	.=	"<script>";
-		$s	.=	"\n";
-		$s	.=	"    $(document).ready(function () {";
-		$s	.=	"\n";
-		$s	.=	"        $('#form_cadastrar_"	.	""	.	strtolower($nome_classe)	.	"').submit(function () {";
-		$s	.=	"\n";
-		$s	.=	"            var page = \"<?= base_url('##########################') ?>\";";
-		$s	.=	"\n";
-		$s	.=	"            var dados = jQuery(this).serialize();";
-		$s	.=	"\n";
-		$s	.=	"            $.ajax({";
-		$s	.=	"\n";
-		$s	.=	"                type: 'POST',";
-		$s	.=	"\n";
-		$s	.=	"                dataType: 'html',";
-		$s	.=	"\n";
-		$s	.=	"                url: page,";
-		$s	.=	"\n";
-		$s	.=	"                beforeSend: function () {";
-		$s	.=	"\n";
-		$s	.=	"                    $(\"#carregando_animado\").show('fast');";
-		$s	.=	"\n";
-		$s	.=	"                },";
-		$s	.=	"\n";
-		$s	.=	"                data: dados,";
-		$s	.=	"\n";
-		$s	.=	"                success: function (msg) {";
-		$s	.=	"\n";
-		$s	.=	"                    $(\"#resposta\").append(msg);";
-		$s	.=	"\n";
-		$s	.=	"                    $(\"#carregando_animado\").hide('fast');";
-		$s	.=	"\n";
-		$s	.=	"                }";
-		$s	.=	"\n";
-		$s	.=	"            });";
-		$s	.=	"\n";
-		$s	.=	"            return false;";
-		$s	.=	"\n";
-		$s	.=	"        });";
-		$s	.=	"\n";
-		$s	.=	"    });";
-		$s	.=	"\n";
-		$s	.=	"</script>";
-		$s	.=	"\n\n";
-		$s	.=	"<!-- ######### fim formulario de cadastro #################### -->";
-		$s	.=	"\n\n\n";
-		return	$s;
+function	make_insert_form($nome_classe,	$atributos)	{
+		?>
+		<!-- ############# formulario de cadastro #################### -->
+
+		<h1 class='text-uppercase'>Cadastrar <?=	$nome_classe	?></h1>
+		<form method='post' action="####################">
+				<fieldset>
+						<?php
+						foreach	($atributos	as	$atributo):
+								$nome_do_atributo	=	str_replace('_',	' ',	ucfirst($atributo));
+								?>
+								<!-- <?=	$nome_do_atributo	?> -->
+								<div class='form-group'>
+										<label class='control-label' for='<?=	$atributo	?>'><?=	$nome_do_atributo	?></label>
+										<input id='<?=	$atributo	?>' name='<?=	$atributo	?>' type='text' placeholder='<?=	$nome_do_atributo	?>' class='form-control input-md' required>
+								</div>
+						<?php	endforeach;	?>
+
+						<br>
+						<button type='submit' class='btn btn-lg btn-primary'>Publicar</button>
+
+				</fieldset>
+		</form>
+
+		<!-- ######### fim formulario de cadastro #################### -->
+
+		<?php
+}
+
+//depois colocaremos opcao la na frente para usar com ajax ou não
+function	make_insert_form_ajax($nome_classe,	$atributos)	{
+		?>
+		<!-- ############# formulario de cadastro #################### -->
+
+		<h1 class='text-uppercase'>Cadastrar <?=	$nome_classe	?></h1>
+		<form method='post' id='form_cadastrar_<?=	strtolower($nome_classe)	?>'>
+				<fieldset>
+						<?php
+						foreach	($atributos	as	$atributo):
+								$nome_do_atributo	=	str_replace('_',	' ',	ucfirst($atributo));
+								?>
+								<!-- <?=	$nome_do_atributo	?> -->
+								<div class='form-group'>
+										<label class='control-label' for='<?=	$atributo	?>'><?=	$nome_do_atributo	?></label>
+										<input id='<?=	$atributo	?>' name='<?=	$atributo	?>' type='text' placeholder='<?=	$nome_do_atributo	?>' class='form-control input-md' required>
+								</div>
+						<?php	endforeach;	?>
+
+						<br>
+						<button type='submit' class='btn btn-lg btn-primary'>Publicar</button>
+
+				</fieldset>
+		</form>
+		<br>
+		<div class='container'>
+				<div class='row'>
+						<div id='resposta_form_cadastrar_<?=	strtolower($nome_classe)	?>'></div>
+				</div>
+		</div>
+		<script>
+				$(document).ready(function () {
+						$('#form_<?=	strtolower($nome_classe)	?>').submit(function () {
+								var page = "##################";
+								var dados = jQuery(this).serialize();
+								$.ajax({
+										type: 'POST',
+										dataType: 'html',
+										url: page,
+										beforeSend: function () {
+												$("#carregando_animado").show('fast');
+										},
+										data: dados,
+										success: function (msg) {
+												$("#resposta_form_cadastrar_<?=	strtolower($nome_classe)	?>").append(msg);
+												$("#carregando_animado").hide('fast');
+										}
+								});
+								return false;
+						});
+				});
+		</script>
+
+		<!-- ######### fim formulario de cadastro #################### -->
+		<?php
 }
 
 function	make_edit_form($nome_classe,	$atributos)	{
-		$s	=	'';
-		$s	.=	"<!-- ############# formulario de edição #################### -->";
-		$s	.=	"\n\n";
-		$s	.=	'<?php';
-		$s	.=	"\n";
-		$s	.=	'$'	.	""	.	strtolower($nome_classe)	.	" = "	.	"$nome_classe"	.	"_model::"	.	"getObj"	.	"$nome_classe($"	.	"id);";
-		$s	.=	"\n";
-		$s	.=	"?>";
-		$s	.=	"\n\n";
-		$s	.=	"<h1 class='text-uppercase'>Editar "	.	strtolower($nome_classe)	.	"</h1>";
-		$s	.=	"\n";
-		$s	.=	"<form method='post' id='form_editar_"	.	""	.	strtolower($nome_classe)	.	"'>";
-		$s	.=	"\n";
-		$s	.=	'<fieldset>';
-		$s	.=	"\n";
-		foreach	($atributos	as	$atributo)	{
-				$nome_do_atributo	=	str_replace('_',	' ',	ucfirst($atributo));
-				$s	.=	"                <!-- $nome_do_atributo -->
-                <div class='form-group'>
-                    <label class='control-label' for='$atributo'>$nome_do_atributo</label>
-                    <input id='$atributo' name='$atributo' type='text' value='<?= $"	.	strtolower($nome_classe)	.	""	.	"->get".		ucfirst($atributo)."() ?>' class='form-control input-md' required>
-                </div>";
-				$s	.=	"\n\n";
-		}
-		$s	.=	"<input type='hidden' name='id' value='<?= $"	.	strtolower($nome_classe)	.	""	.	"->getId() ?>'>";
-		$s	.=	"\n";
-		$s	.=	"<br><button type='submit' class='btn btn-lg btn-primary'>Salvar edição</button>";
-		$s	.=	"\n\n";
-		$s	.=	"</fieldset>";
-		$s	.=	"\n";
-		$s	.=	"</form>";
-		$s	.=	"\n";
-		$s	.=	"<br>";
-		$s	.=	"\n";
-		$s	.=	"<div class='container'>";
-		$s	.=	"\n";
-		$s	.=	"    <div class='row'>";
-		$s	.=	"\n";
-		$s	.=	"        <div id='resposta'></div>";
-		$s	.=	"\n";
-		$s	.=	"    </div>";
-		$s	.=	"\n";
-		$s	.=	"</div>";
-		$s	.=	"\n";
-		$s	.=	"<script>";
-		$s	.=	"\n";
-		$s	.=	"    $(document).ready(function () {";
-		$s	.=	"\n";
-		$s	.=	"        $('form_editar_"	.	""	.	strtolower($nome_classe)	.	"').submit(function () {";
-		$s	.=	"\n";
-		$s	.=	"            var page = \"<?= base_url('##########################') ?>\";";
-		$s	.=	"\n";
-		$s	.=	"            var dados = jQuery(this).serialize();";
-		$s	.=	"\n";
-		$s	.=	"            $.ajax({";
-		$s	.=	"\n";
-		$s	.=	"                type: 'POST',";
-		$s	.=	"\n";
-		$s	.=	"                dataType: 'html',";
-		$s	.=	"\n";
-		$s	.=	"                url: page,";
-		$s	.=	"\n";
-		$s	.=	"                beforeSend: function () {";
-		$s	.=	"\n";
-		$s	.=	"                    $(\"#carregando_animado\").show('fast');";
-		$s	.=	"\n";
-		$s	.=	"                },";
-		$s	.=	"\n";
-		$s	.=	"                data: dados,";
-		$s	.=	"\n";
-		$s	.=	"                success: function (msg) {";
-		$s	.=	"\n";
-		$s	.=	"                    $(\"#resposta\").append(msg);";
-		$s	.=	"\n";
-		$s	.=	"                    $(\"#carregando_animado\").hide('fast');";
-		$s	.=	"\n";
-		$s	.=	"                }";
-		$s	.=	"\n";
-		$s	.=	"            });";
-		$s	.=	"\n";
-		$s	.=	"            return false;";
-		$s	.=	"\n";
-		$s	.=	"        });";
-		$s	.=	"\n";
-		$s	.=	"    });";
-		$s	.=	"\n";
-		$s	.=	"</script>";
-		$s	.=	"\n\n";
-		$s	.=	"<!-- ######### fim formulario de edição #################### -->";
-		$s	.=	"\n\n\n";
-		return	$s;
+		?>
+		<!-- ############# formulario de edição #################### -->
+		<?=
+		'<?php $pessoa	=	Pessoa_model::getObjPessoa($id); ?>'
+		?>
+
+		<h1 class='text-uppercase'>Editar <?=	$nome_classe	?></h1>
+		<form method='post' action="################">
+				<fieldset>
+						<?php
+						foreach	($atributos	as	$atributo):
+								$nome_do_atributo	=	str_replace('_',	' ',	ucfirst($atributo));
+								?>
+								<!-- <?=	$nome_do_atributo	?> -->
+								<div class='form-group'>
+										<label class='control-label' for='<?=	$atributo	?>'><?=	$nome_do_atributo	?></label>
+										<input id='<?=	$atributo	?>' name='<?=	$atributo	?>' type='text' value='<?=	'<?= $pessoa->getNome() ?>'	?>' class='form-control input-md' required>
+								</div>
+						<?php	endforeach;	?>
+
+						<input type='hidden' name='id' value='<?=	'$pessoa->getId()'	?>'>
+						<br>
+						<button type='submit' class='btn btn-lg btn-primary'>Salvar edição</button>
+
+				</fieldset>
+		</form>
+		<!-- ######### fim formulario de edição #################### -->
+		<?php
+}
+
+//depois colocaremos opcao la na frente para usar com ajax ou não
+function	make_edit_form_ajax($nome_classe,	$atributos)	{
+		?>
+		<!-- ############# formulario de edição #################### -->
+		<?=
+		'<?php $pessoa	=	Pessoa_model::getObjPessoa($id); ?>'
+		?>
+
+		<h1 class='text-uppercase'>Editar <?=	$nome_classe	?></h1>
+		<form method='post' id='form_editar_<?=	strtolower($nome_classe)	?>'>
+				<fieldset>
+						<?php
+						foreach	($atributos	as	$atributo):
+								$nome_do_atributo	=	str_replace('_',	' ',	ucfirst($atributo));
+								?>
+								<!-- <?=	$nome_do_atributo	?> -->
+								<div class='form-group'>
+										<label class='control-label' for='<?=	$atributo	?>'><?=	$nome_do_atributo	?></label>
+										<input id='<?=	$atributo	?>' name='<?=	$atributo	?>' type='text' value='<?=	'<?= $pessoa->getNome() ?>'	?>' class='form-control input-md' required>
+								</div>
+						<?php	endforeach;	?>
+
+						<input type='hidden' name='id' value='<?=	'$pessoa->getId()'	?>'>
+						<br>
+						<button type='submit' class='btn btn-lg btn-primary'>Salvar edição</button>
+
+				</fieldset>
+		</form>
+		<br>
+		<div class='container'>
+				<div class='row'>
+						<div id='resposta_form_editar_<?=	strtolower($nome_classe)	?>'></div>
+				</div>
+		</div>
+		<script>
+				$(document).ready(function () {
+						$('form_editar_<?=	strtolower($nome_classe)	?>').submit(function () {
+								var page = "##############################";
+								var dados = jQuery(this).serialize();
+								$.ajax({
+										type: 'POST',
+										dataType: 'html',
+										url: page,
+										beforeSend: function () {
+												$("#carregando_animado").show('fast');
+										},
+										data: dados,
+										success: function (msg) {
+												$("#resposta_form_editar_<?=	strtolower($nome_classe)	?>").append(msg);
+												$("#carregando_animado").hide('fast');
+										}
+								});
+								return false;
+						});
+				});
+		</script>
+		<!-- ######### fim formulario de edição #################### -->
+		<?php
 }
 
 function	make_methods($nome_classe,	$atributos,	$numVars)	{
@@ -374,7 +370,7 @@ function	make_sql($nome_classe,	$atributos)	{
 		return	$s;
 }
 
-function	make_class($nome_classe,	$atributos, $numVars)	{
+function	make_class($nome_classe,	$atributos,	$numVars)	{
 		$s	=	'';
 		$s	.=	"<!-- ############## classe php ################### -->";
 		$s	.=	"\n\n";
