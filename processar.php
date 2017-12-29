@@ -24,17 +24,14 @@ $num_atributos = count($atributos);
 //iniciando a var $s, depois a gente remove essa gambi de var e cada metodo dara seus echo's
 $s = "\n\n";
 
-//div com display none para não ficar aquela bagunça na tela
-echo "<div >";
-
 /* formularios html com classes booststrap */
-$s .= make_forms($nome_classe, $atributos);
+make_forms($nome_classe, $atributos, $num_atributos);
 
 /* metodos do controller que receberao os post dos formularios */
-$s .= make_methods($nome_classe, $atributos, $num_atributos);
+make_methods($nome_classe, $atributos, $num_atributos);
 
 /* comando sql para criar a tabela da classse no banco*/
-$s .= make_sql($nome_classe, $atributos);
+make_sql($nome_classe, $atributos, $num_atributos);
 
 /*  classe php contendo os atributos do formulario */
 $s .= make_class($nome_classe,	$atributos, $num_atributos);
@@ -42,6 +39,4 @@ $s .= make_class($nome_classe,	$atributos, $num_atributos);
 //jogando o codigo gerado na tela
 var_dump($s);
 
-echo "</div>";// fechando a div que esconde a bagunça
-
-echo "<h1>Por favor visualize o codigo fonte da pagina</h1>";
+echo "<h1>O codigo gerado esta no codigo fonte dessa pagina</h1>";

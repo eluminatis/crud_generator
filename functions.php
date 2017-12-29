@@ -7,39 +7,40 @@
 	* Modificado por: Girol | andregirol@gmail.com
 	*/
 
-function make_forms($nome_classe, $atributos) {
-		make_insert_form($nome_classe, $atributos);
-		$s = make_edit_form($nome_classe, $atributos);
-		return $s;
+function make_forms($nome_classe, $atributos, $num_atributos) {
+		$height = $num_atributos * 80 + 150;//calculando o tamanho do textarea
+		
+		echo	'
+				<h1>Formulario de cadastro</h1>
+				<textarea style="width: 100%; background-color: #ccffff; min-height:'.$height.'px"> ';
+				make_insert_form($nome_classe, $atributos, $num_atributos);
+		echo	"</textarea>";
+		
+		echo	'
+				<h1>Formulario de edição</h1>
+				<textarea style="width: 100%; background-color: #ccffff; min-height:'.$height.'px"> ';
+				make_edit_form($nome_classe, $atributos);
+		echo	"</textarea>";
 }
 
-function make_insert_form($nome_classe,	$atributos){ ?>
-		<!-- ############# formulario de cadastro #################### -->
-
-		<h1 class='text-uppercase'>Cadastrar <?= $nome_classe ?></h1>
-		<form method='post' action="####################">
-			<fieldset>
-					<?php
-					foreach	($atributos	as	$atributo):
-							$nome_do_atributo = str_replace('_', ' ', ucfirst($atributo));
-							?>
-							<!-- <?= $nome_do_atributo ?> -->
-							<div class='form-group'>
-								<label class='control-label' for='<?= $atributo	?>'>
-									<?=	$nome_do_atributo ?>
-								</label>
-								<input id='<?=	$atributo	?>' name='<?= $atributo	?>' type='text' placeholder='<?= $nome_do_atributo ?>' class='form-control input-md' required>
-							</div>
-					<?php endforeach; ?>
-
-					<br>
-					<button type='submit' class='btn btn-lg btn-primary'>Publicar</button>
-
-			</fieldset>
-		</form>
-
-		<!-- ######### fim formulario de cadastro #################### -->
-
+function make_insert_form($nome_classe,	$atributos, $num_atributos){ ?>
+<h1 class='text-uppercase'>Cadastrar <?= $nome_classe ?></h1>
+<form method='post' action="####################">
+  <fieldset>
+		<?php
+		foreach	($atributos	as	$atributo):
+				$nome_do_atributo = str_replace('_', ' ', ucfirst($atributo));
+		?>
+<!-- <?= $nome_do_atributo ?> -->
+    <div class='form-group'>
+      <label class='control-label' for='<?= $atributo	?>'><?=	$nome_do_atributo ?></label>
+      <input id='<?=	$atributo	?>' name='<?= $atributo	?>' type='text' placeholder='<?= $nome_do_atributo ?>' class='form-control input-md' required>
+    </div>
+    <?php endforeach; ?>
+    <br>
+    <button type='submit' class='btn btn-lg btn-primary'>Cadastrar</button>
+  </fieldset>
+</form>
 		<?php
 }
 
@@ -101,33 +102,28 @@ function	make_insert_form_ajax($nome_classe,	$atributos)	{
 }
 
 function	make_edit_form($nome_classe,	$atributos)	{
+  echo	'<?php $pessoa = Pessoa_model::getObjPessoa($id); ?>' ;
 		?>
-		<!-- ############# formulario de edição #################### -->
-		<?=
-		'<?php $pessoa	=	Pessoa_model::getObjPessoa($id); ?>'
-		?>
-
-		<h1 class='text-uppercase'>Editar <?=	$nome_classe	?></h1>
-		<form method='post' action="################">
-				<fieldset>
-						<?php
-						foreach	($atributos	as	$atributo):
-								$nome_do_atributo	=	str_replace('_',	' ',	ucfirst($atributo));
-								?>
-								<!-- <?=	$nome_do_atributo	?> -->
-								<div class='form-group'>
-										<label class='control-label' for='<?=	$atributo	?>'><?=	$nome_do_atributo	?></label>
-										<input id='<?=	$atributo	?>' name='<?=	$atributo	?>' type='text' value='<?=	'<?= $pessoa->getNome() ?>'	?>' class='form-control input-md' required>
-								</div>
-						<?php	endforeach;	?>
-
-						<input type='hidden' name='id' value='<?=	'$pessoa->getId()'	?>'>
-						<br>
-						<button type='submit' class='btn btn-lg btn-primary'>Salvar edição</button>
-
-				</fieldset>
-		</form>
-		<!-- ######### fim formulario de edição #################### -->
+		
+		
+<h1 class='text-uppercase'>Editar <?=	$nome_classe	?></h1>
+<form method='post' action="################">
+  <fieldset>
+  <?php
+    foreach	($atributos	as	$atributo):
+      $nome_do_atributo	=	str_replace('_',	' ',	ucfirst($atributo));
+  ?>
+<!-- <?=	$nome_do_atributo	?> -->
+    <div class='form-group'>
+      <label class='control-label' for='<?=	$atributo	?>'><?=	$nome_do_atributo	?></label>
+      <input id='<?=	$atributo	?>' name='<?=	$atributo	?>' type='text' value='<?=	'<?= $pessoa->getNome() ?>'	?>' class='form-control input-md' required>
+    </div>
+    <?php	endforeach;	?>
+    <input type='hidden' name='id' value='<?=	'$pessoa->getId()'	?>'>
+    <br>
+    <button type='submit' class='btn btn-lg btn-primary'>Salvar edição</button>
+  </fieldset>
+</form>
 		<?php
 }
 
@@ -192,12 +188,42 @@ function	make_edit_form_ajax($nome_classe,	$atributos)	{
 }
 
 function	make_methods($nome_classe,	$atributos,	$numVars)	{
-		$s	=	make_insert_method($nome_classe,	$atributos,	$numVars);
-		$s	.=	make_edit_method($nome_classe,	$atributos,	$numVars);
-		return	$s;
+		$height = $numVars * 16 + 60;//calculando o tamanho do textarea
+		
+		echo	'
+				<h1>Metodo que recebe o formulário de cadastro</h1>
+				<textarea style="width: 100%; background-color: #ccffff; min-height:'.$height.'px"> ';
+				make_insert_method($nome_classe,	$atributos,	$numVars);
+		echo	"</textarea>";
+				
+		echo	'
+				<h1>Metodo que recebe o formulário de edição</h1>
+				<textarea style="width: 100%; background-color: #ccffff; min-height:'.$height.'px"> ';
+				make_edit_method($nome_classe,	$atributos,	$numVars);
+		echo	"</textarea>";
 }
 
 function	make_insert_method($nome_classe,	$atributos,	$numVars)	{
+		echo	'$getpost = filter_input_array(INPUT_POST, FILTER_DEFAULT);';
+		echo	"\n";
+		foreach	($atributos	as	$atributo)	{
+				echo '$'	.	"$atributo = "	.	'$getpost'	.	"['$atributo'];";
+				echo	"\n";
+		}
+		echo	"\n";
+		echo	'$sucess = '	.	"$nome_classe"	.	"_model::"	.	"insert"	.	"$nome_classe(";
+		$cont0	=	1;
+		foreach	($atributos	as	$atributo)	{
+				echo	'$'	.	"$atributo";
+				if	($cont0	<	$numVars)	{
+						echo	", ";
+				}
+				$cont0++;
+		}
+		echo	');';
+}
+
+function	make_insert_method_ajax($nome_classe,	$atributos,	$numVars)	{
 		$s	=	'';
 		$s	.=	"<!-- ######### metodo que recebe o form de cadastro ########## -->";
 		$s	.=	"\n\n";
@@ -271,6 +297,29 @@ function	make_insert_method($nome_classe,	$atributos,	$numVars)	{
 }
 
 function	make_edit_method($nome_classe,	$atributos,	$numVars)	{
+		echo	'$getpost = filter_input_array(INPUT_POST, FILTER_DEFAULT);';
+		echo	"\n";
+		echo	'$'	.	"id = "	.	'$getpost'	.	"['id'];";
+		echo	"\n";
+		foreach	($atributos	as	$atributo)	{
+				echo	'$'	.	"$atributo = "	.	'$getpost'	.	"['$atributo'];";
+				echo	"\n";
+		}
+		echo	"\n";
+		echo	'$sucess = '	.	"$nome_classe"	.	"_model::"	.	"update"	.	"$nome_classe(";
+		echo	'$id,';
+		$cont00	=	1;
+		foreach	($atributos	as	$atributo)	{
+				echo	'$'	.	"$atributo";
+				if	($cont00	<	$numVars)	{
+						echo	", ";
+				}
+				$cont00++;
+		}
+		echo	');';
+}
+
+function	make_edit_method_ajax($nome_classe,	$atributos,	$numVars)	{
 		$s	=	'';
 		$s	.=	"<!-- ######### metodo que recebe o form de edição     ########## -->";
 		$s	.=	"\n\n";
@@ -347,22 +396,30 @@ function	make_edit_method($nome_classe,	$atributos,	$numVars)	{
 		return	$s;
 }
 
-function	make_sql($nome_classe,	$atributos)	{
-		echo "<p><!-- ##### sql para criar a tabela ########## --></p>";
+function	make_sql($nome_classe,	$atributos,	$numVars)	{
+		$height = $numVars * 20 + 80;//calculando o tamanho do textarea
+		
 		echo	'
-				<p>CREATE TABLE `'.	strtolower($nome_classe)	.'`</p>
-				<p>(</p>
-				<p>`id` INT NOT NULL AUTO_INCREMENT,</p>';
+				<h1>SQL para criar a tabela (falta configurar os tipos)</h1>
+				<textarea style="width: 100%; background-color: #ccffff; min-height:'.$height.'px"> ';
+		
+		
+echo	'
+CREATE TABLE `'.	strtolower($nome_classe)	.'`
+(
+`id` INT NOT NULL AUTO_INCREMENT,';
+echo	"\n";
+foreach	($atributos	as	$atributo)	{
+		echo	"`$atributo` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,";
 		echo	"\n";
-		foreach	($atributos	as	$atributo)	{
-				echo	"<p>				`$atributo` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,</p>";
-		}
-		echo '
-				<p>PRIMARY KEY (`id`)</p>
-				<p>)</p>
-				<p>ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;</p>
-				';
-		echo "<p><!-- ##### fim sql para criar a tabela ########### --></p>";
+}
+echo '
+PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+';
+		
+		echo	"</textarea>";
 }
 
 function	make_class($nome_classe,	$atributos,	$numVars)	{
