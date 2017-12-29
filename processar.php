@@ -34,9 +34,4 @@ make_methods($nome_classe, $atributos, $num_atributos);
 make_sql($nome_classe, $atributos, $num_atributos);
 
 /*  classe php contendo os atributos do formulario */
-$s .= make_class($nome_classe,	$atributos, $num_atributos);
-
-//jogando o codigo gerado na tela
-var_dump($s);
-
-echo "<h1>O codigo gerado esta no codigo fonte dessa pagina</h1>";
+make_class($nome_classe,	$atributos, $num_atributos);
