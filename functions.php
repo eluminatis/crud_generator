@@ -11,13 +11,13 @@ function make_forms($nome_classe, $atributos, $num_atributos) {
 		$height = $num_atributos * 80 + 300;//calculando o tamanho do textarea
 		
 		echo	'
-				<h1>Formulario de cadastro</h1>
+				<h1>Formulario de cadastro (com classes bootstrap)</h1>
 				<textarea style="width: 100%; background-color: #ccffff; min-height:'.$height.'px"> ';
 				make_insert_form($nome_classe, $atributos, $num_atributos);
 		echo	"</textarea>";
 		
 		echo	'
-				<h1>Formulario de edição</h1>
+				<h1>Formulario de edição (com classes bootstrap)</h1>
 				<textarea style="width: 100%; background-color: #ccffff; min-height:'.$height.'px"> ';
 				make_edit_form($nome_classe, $atributos);
 		echo	"</textarea>";
@@ -545,7 +545,7 @@ function	make_class($nome_classe,	$atributos,	$numVars)	{
 		echo	"\n";
 		echo	'    * Busca o registro que representa o objeto '	.	$nome_classe	.	' cujo id é passado';
 		echo	"\n";
-		echo	'    * no banco de dados, monta o objeto e o retorna.';
+		echo	'    * no banco de dados, monta o objeto e o retorna. Se não encontrar o registro retorna FALSE';
 		echo	"\n";
 		echo	'    */';
 		echo	"\n";
@@ -554,6 +554,8 @@ function	make_class($nome_classe,	$atributos,	$numVars)	{
 		echo	'        $con = Conect_model::conectar();';
 		echo	"\n";
 		echo	'        $rs = $con->query("SELECT * FROM '	.	"`"	.	strtolower($nome_classe)	.	"`"	.	' WHERE id = \'$id\'");';
+		echo	"\n";
+		echo	'        if($rs->rowCount() < 1){return FALSE;}';
 		echo	"\n";
 		echo	'        while ($row = $rs->fetch(PDO::FETCH_OBJ)) {';
 		echo	"\n";
