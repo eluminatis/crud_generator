@@ -5,15 +5,15 @@
 				<title>Gerador automático de classes</title>
 		</head>
 		<style>
-			* {
-				font-family: sans-serif;
-			}
+				* {
+						font-family: sans-serif;
+				}
 		</style>
 		<body style="background: #88dafb">
 				<div style="width: 60%; margin: 15px auto;">
 						<h1>Projeto ajudante</h1>
 						<h2>
-								Adicione o nome da classe e a lista de atributos dela no formulario abaixo e clique em enviar
+								Adicione o nome da classe e a lista de atributos dela no formulário abaixo e clique em enviar
 						</h2>
 						<form method="post" action="processar.php">
 								<label for="nome" style="font-size: 18pt;">Nome da classe</label><br>
