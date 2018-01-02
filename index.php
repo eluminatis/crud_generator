@@ -4,6 +4,11 @@
 				<meta charset="UTF-8">
 				<title>Gerador automático de classes</title>
 		</head>
+		<style>
+			* {
+				font-family: sans-serif;
+			}
+		</style>
 		<body style="background: #88dafb">
 				<div style="width: 60%; margin: 15px auto;">
 						<h1>Projeto ajudante</h1>
