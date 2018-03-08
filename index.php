@@ -28,7 +28,7 @@
                     <option value="laravel">Laravel</option>
                     <option value="ci">Code Igniter</option>
                     <option value="php">PHP puro</option>
-                    <option value="symphony">Symphony</option>
+                    <option value="symphony">Symphony 2 </option>
                 </select>
                 <br /><br />
                 <button type="submit" style="width: 250px; height: 100px;font-size: 18pt;">Enviar</button>
