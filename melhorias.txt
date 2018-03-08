@@ -1,0 +1,8 @@
+* metodo getObj ver se a select->rowcount > 0 para nao dar erro na classe quando o obj nao existe no banco
+if ($rs->rowCount() < 1) {
+  return FALSE;
+}
+
+poder escolher o tipo do dado no bd no front
+
+ter um plugin js de editor de codigo na saida
