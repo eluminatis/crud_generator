@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Gerador automático de classes</title>
+        <title>Gerador automático de classes para framework</title>
     </head>
     <style>
         * {
