@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Gerador automático de classes</title>
+        <title>Gerador automático de classescom op de fw</title>
     </head>
     <style>
         * {
@@ -25,10 +25,10 @@
 
                 <label for="selecet_fw">Selecione o framework</label>
                 <select id="selecet_fw" name="selecet_fw" class="form-control">
-                    <option>Laravel</option>
-                    <option>Code Igniter</option>
-                    <option>PHP puro</option>
-                    <option>Synphony</option>
+                    <option value="laravel">Laravel</option>
+                    <option value="ci">Code Igniter</option>
+                    <option value="php">PHP puro</option>
+                    <option value="symphony">Symphony</option>
                 </select>
                 <br /><br />
                 <button type="submit" style="width: 250px; height: 100px;font-size: 18pt;">Enviar</button>
