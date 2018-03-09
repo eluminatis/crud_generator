@@ -11,7 +11,7 @@
     </style>
     <body style="background: #cccccc">
         <div style="width: 60%; margin: 15px auto;">
-            <h1>Projeto ajudante</h1>
+            <h1>Projeto gerador de cruds</h1>
 
             <h2>
                 Adicione o nome da classe e a lista de atributos dela no formulário abaixo e clique em enviar
