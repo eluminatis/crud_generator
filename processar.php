@@ -23,14 +23,14 @@ $nome_classe = ucfirst(strtolower($getpost['nome']));
 //gerando uma variavel com a contagem dos attrs
 $num_atributos = count($atributos);
 
-/* rotas do laravel*/
+// rotas do laravel
 make_routes($nome_classe, $atributos, $num_atributos);
 
-/* metodos do controller que receberao os post dos formularios */
+// metodos do controller
 make_methods($nome_classe, $atributos, $num_atributos);
 
-/* formularios html com classes booststrap */
+// formularios
 make_forms($nome_classe, $atributos, $num_atributos);
 
-/*  classe php contendo os atributos do formulario */
+// index do crud
 make_index_view($nome_classe,	$atributos, $num_atributos);
