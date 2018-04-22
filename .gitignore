@@ -1,0 +1,4 @@
+# Arquivos de swap do Vim
+*.swp
+
+/nbproject
