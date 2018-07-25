@@ -1,0 +1,4 @@
+este gerador de crud respeita algumas convenções:
+- todo model deve ficar em \App\Models\
+- todo projeto usa o package adminlte
+- todo projeto tem a view messages/msgs.blade.php

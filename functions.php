@@ -10,197 +10,220 @@
 ### ROTAS
 ###########################################################################################################
 function make_routes($nome_classe, $atributos, $numVars) {
-    $height = 150; //calculando o tamanho do textarea
-    echo '<h1>Rotas</h1><textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . $height . 'px"> ';
-    echo "\n";
+    echo "\n";//pula a linha
     echo "Route::get('/" . strtolower($nome_classe) . "', '$nome_classe" . "Controller@index');";
-    echo "\n";
+    echo "\n";//pula a linha
     echo "Route::get('/" . strtolower($nome_classe) . "/create', '$nome_classe" . "Controller@create');";
-    echo "\n";
+    echo "\n";//pula a linha
     echo "Route::post('/" . strtolower($nome_classe) . "/store', '$nome_classe" . "Controller@store');";
-    echo "\n";
-    echo "Route::get('/" . strtolower($nome_classe) . "/{" . strtolower($nome_classe) . "}/show', '$nome_classe" . "Controller@show');";
-    echo "\n";
+    echo "\n";//pula a linha
     echo "Route::get('/" . strtolower($nome_classe) . "/{" . strtolower($nome_classe) . "}/edit', '$nome_classe" . "Controller@edit');";
-    echo "\n";
+    echo "\n";//pula a linha
     echo "Route::post('/" . strtolower($nome_classe) . "/{" . strtolower($nome_classe) . "}/update', '$nome_classe" . "Controller@update');";
-    echo "\n";
+    echo "\n";//pula a linha
     echo "Route::get('/" . strtolower($nome_classe) . "/{" . strtolower($nome_classe) . "}/destroy', '$nome_classe" . "Controller@destroy');";
-    echo "</textarea>";
 }
 
 ### CONTROLLER
 ###########################################################################################################
 
-function make_methods($nome_classe, $atributos, $numVars) {
-    $height = $numVars * 30 + 150; //calculando o tamanho do textarea
-
-    echo '
-				<h1>Metodo ' . $nome_classe . 'Controller@index</h1>
-				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . 70 . 'px"> ';
+function make_controller($nome_classe, $atributos, $numVars) {
     make_index_method($nome_classe, $atributos, $numVars);
-    echo "</textarea>";
 
-    echo '
-				<h1>Metodo ' . $nome_classe . 'Controller@create</h1>
-				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . 50 . 'px"> ';
     make_create_method($nome_classe, $atributos, $numVars);
-    echo "</textarea>";
 
-    echo '
-				<h1>Metodo ' . $nome_classe . 'Controller@store</h1>
-				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . $height . 'px"> ';
     make_store_method($nome_classe, $atributos, $numVars);
-    echo "</textarea>";
 
-    echo '
-				<h1>Metodo ' . $nome_classe . 'Controller@show</h1>
-				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . 70 . 'px"> ';
-    make_show_method($nome_classe, $atributos, $numVars);
-    echo "</textarea>";
-
-    echo '
-				<h1>Metodo ' . $nome_classe . 'Controller@edit</h1>
-				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . 70 . 'px"> ';
     make_edit_method($nome_classe, $atributos, $numVars);
-    echo "</textarea>";
 
-    echo '
-				<h1>Metodo ' . $nome_classe . 'Controller@update</h1>
-				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . $height . 'px"> ';
     make_update_method($nome_classe, $atributos, $numVars);
-    echo "</textarea>";
 
-    echo '
-				<h1>Metodo ' . $nome_classe . 'Controller@destroy</h1>
-				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . 70 . 'px"> ';
     make_destroy_method($nome_classe, $atributos, $numVars);
-    echo "</textarea>";
 }
 
 function make_index_method($nome_classe, $atributos, $numVars) {
-    echo "\n";
-    echo '$data' . "['" . strtolower($nome_classe) . "s'] = " . $nome_classe . "::all();";
-    echo "\n";
-    echo 'return view(\'' . strtolower($nome_classe) . '.index\', $data);';
+    echo('
+/**
+ * Display a listing of the resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+public function index()
+{
+    $data["'.strtolower($nome_classe).'s"] = '. $nome_classe . '::all();
+    return view("' . strtolower($nome_classe) . '.index", $data);;
+}
+    ');
 }
 
 function make_create_method($nome_classe, $atributos, $numVars) {
-    echo "\n";
-    echo 'return view(\'' . strtolower($nome_classe) . '.create\');';
+    echo('
+/**
+ * Show the form for creating a new resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+public function create()
+{
+    return view("' . strtolower($nome_classe) . '.form");
+}
+    ');
 }
 
 function make_store_method($nome_classe, $atributos, $numVars) {
-    echo "\n";
-    echo '$request->validate([';
-    echo "\n";
-    foreach ($atributos as $atributo) {
-        echo "    '$atributo' => 'required|min:4|max:191',";
-        echo "\n";
-    }
-    echo ']);';
-    echo "\n";
-    echo '$' . strtolower($nome_classe) . ' = new ' . $nome_classe . '();';
-    echo "\n";
-    foreach ($atributos as $atributo) {
-        echo '$' . strtolower($nome_classe) . '->' . $atributo . ' = ' . '$request->' . $atributo . ';';
-        echo "\n";
-    }
-    echo '$' . strtolower($nome_classe) . '->save();';
-    echo "\n";
-    echo "\Session::flash('flash_msg', 'Armazenamento realizado com sucesso.');";
-    echo "\n";
-    echo "return redirect('/" . strtolower($nome_classe) . "');";
+    echo('
+/**
+ * Store a newly created resource in storage.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @return \Illuminate\Http\Response
+ */
+public function store(Request $request)
+{
+    $request->validate([
+    ');
+    echo "\n";//pula a linha
+    //criando as validações
+foreach ($atributos as $atributo) {
+    echo "        '$atributo' => 'required|min:4|max:191',";
+    echo "\n";//pula a linha
+}
+    echo('
+    ]);
+
+    $' . strtolower($nome_classe) . ' = new ' . $nome_classe . '();
+    ');
+    echo "\n";//pula a linha
+    //preenchendo os atributos do objeto recém criado
+foreach ($atributos as $atributo) {
+    echo '    $' . strtolower($nome_classe) . '->' . $atributo . ' = ' . '$request->' . $atributo . ';';
+    echo "\n";//pula a linha
+}
+    //persistindo o objeto
+    echo '    $' . strtolower($nome_classe) . '->save();';
+    //mensagem flash de sucesso e retorno para a rota index
+    echo('
+    \Session::flash("flash_msg_success", "Armazenamento realizado com sucesso.");
+    return redirect("/' . strtolower($nome_classe) . '");
+}
+    ');
 }
 
 function make_show_method($nome_classe, $atributos, $numVars) {
-    echo "\n";
-    echo '$data' . "['" . strtolower($nome_classe) . "'] = $" . strtolower($nome_classe) . ";";
-    echo "\n";
-    echo 'return view(\'' . strtolower($nome_classe) . '.show\', $data);';
+    echo('
+/**
+ * Display the specified resource.
+ *
+ * @param  \App\Models\\'.$nome_classe.' $'.strtolower($nome_classe).'
+ * @return \Illuminate\Http\Response
+ */
+public function show('.$nome_classe.' $'.strtolower($nome_classe).')
+{
+    $data["'.strtolower($nome_classe).'"] = $'.strtolower($nome_classe).';
+    return view("'.strtolower($nome_classe).'.show", $data);
+}
+    ');
 }
 
 function make_edit_method($nome_classe, $atributos, $numVars) {
-    echo "\n";
-    echo '$data' . "['" . strtolower($nome_classe) . "s'] = $" . strtolower($nome_classe) . ";";
-    echo "\n";
-    echo 'return view(\'' . strtolower($nome_classe) . '.edit\', $data);';
+    echo('
+/**
+ * Show the form for editing the specified resource.
+ *
+ * @param  \App\Models\\'.$nome_classe.' $'.strtolower($nome_classe).'
+ * @return \Illuminate\Http\Response
+ */
+public function edit('.$nome_classe.' $'.strtolower($nome_classe).')
+{
+    $data["'.strtolower($nome_classe).'"] = $'.strtolower($nome_classe).';
+    return view("'.strtolower($nome_classe).'.form", $data);
+}
+    ');
 }
 
 function make_update_method($nome_classe, $atributos, $numVars) {
-    echo "\n";
-    echo '$request->validate([';
-    echo "\n";
-    foreach ($atributos as $atributo) {
-        echo "    '$atributo' => 'required|min:4|max:191',";
-        echo "\n";
-    }
-    echo ']);';
-    echo "\n";
-    foreach ($atributos as $atributo) {
-        echo '$' . strtolower($nome_classe) . '->' . $atributo . ' = ' . '$request->' . $atributo . ';';
-        echo "\n";
-    }
-    echo '$' . strtolower($nome_classe) . '->save();';
-    echo "\n";
-    echo "\Session::flash('flash_msg', 'Edição realizada com sucesso.');";
-    echo "\n";
-    echo "return redirect('/" . strtolower($nome_classe) . "');";
+    echo('
+/**
+ * Update the specified resource in storage.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @param  \App\Models\\'.$nome_classe.' $'.strtolower($nome_classe).'
+ * @return \Illuminate\Http\Response
+ */
+public function update(Request $request, '.$nome_classe.' $'.strtolower($nome_classe).')
+{
+    $request->validate([
+    ');
+    echo "\n";//pula a linha
+    //criando as validações
+foreach ($atributos as $atributo) {
+    echo "        '$atributo' => 'required|min:4|max:191',";
+    echo "\n";//pula a linha
+}
+    echo "\n";//pula a linha
+    echo('    ]);');
+    echo "\n\n";
+    //preenchendo os atributos do objeto recém criado
+foreach ($atributos as $atributo) {
+    echo '    $' . strtolower($nome_classe) . '->' . $atributo . ' = ' . '$request->' . $atributo . ';';
+    echo "\n";//pula a linha
+}
+    //persistindo o objeto
+    echo '    $' . strtolower($nome_classe) . '->save();';
+    echo "\n";//pula a linha
+    //mensagem flash de sucesso e retorno para a rota index
+    echo('
+    \Session::flash("flash_msg_success", "Update realizado com sucesso.");
+    return redirect("/' . strtolower($nome_classe) . '");
+}
+    ');
 }
 
 function make_destroy_method($nome_classe, $atributos, $numVars) {
-    echo "\n";
-    echo "$" . strtolower($nome_classe) . "->delete();";
-    echo "\n";
-    echo "\Session::flash('flash_msg', 'Exclusão realizada com sucesso.');";
-    echo "\n";
-    echo "return redirect('/" . strtolower($nome_classe) . "');";
+    echo('
+/**
+ * Remove the specified resource from storage.
+ *
+ * @param  \App\Models\\'.$nome_classe.' $'.strtolower($nome_classe).'
+ * @return \Illuminate\Http\Response
+ */
+public function destroy('.$nome_classe.' $'.strtolower($nome_classe).')
+{
+    $'.strtolower($nome_classe).'->delete();
+    \Session::flash("flash_msg_success", "Exclusão realizada com sucesso.");
+    return redirect("/' . strtolower($nome_classe) . '");
+}
+    ');
 }
 
 ### VIEWS
 ###########################################################################################################
 
 function make_forms($nome_classe, $atributos, $num_atributos) {
-    $height = $num_atributos * 80 + 450; //calculando o tamanho do textarea
+    $height = $num_atributos * 132 + 450; //calculando o tamanho do textarea
 
     echo '
-				<h1>View create</h1>
-				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . $height . 'px"> ';
-    make_insert_form($nome_classe, $atributos, $num_atributos);
-    echo "</textarea>";
-
-    echo '
-				<h1>View edit</h1>
+				<h1>View form</h1>
 				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . $height . 'px"> ';
     make_edit_form($nome_classe, $atributos);
-    echo "</textarea>";
-
-    echo '
-				<h1>View show</h1>
-				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . $height . 'px"> ';
-    make_show_view($nome_classe, $atributos, $num_atributos);
     echo "</textarea>";
 }
 
 function make_index_view($nome_classe, $atributos, $numVars) {
-    $height = 1200; //calculando o tamanho do textarea
+    $height = 1500; //calculando o tamanho do textarea
 
     echo '
 				<h1>View index</h1>
 				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . $height . 'px">';
-    echo "\n";
+    echo "\n";//pula a linha
     ?>
     @extends('adminlte::page')
     @section('content_header')
     <h1><?php echo $nome_classe . 's' ?></h1>
     @stop
 
-    @section('content')
-    @if(Session::has('flash_msg'))
-    <div class="alert alert-warning text-center">
-        <p><b>{{Session::get('flash_msg')}}</b></p>
-    </div>
-    @endif
+    @include('messages.msgs')
+
     <a href="{{ url('/<?= strtolower($nome_classe) ?>/create') }}" class="btn btn-lg btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Novo cadastro</a>
     @if($<?= strtolower($nome_classe) ?>s->all())
     <br /><br />
@@ -268,7 +291,7 @@ function make_index_view($nome_classe, $atributos, $numVars) {
 }
 
 function make_insert_form($nome_classe, $atributos, $num_atributos) {
-    echo "\n";
+    echo "\n";//pula a linha
     ?>
     @extends('adminlte::page')
     @section('title', 'Inserir <?= $nome_classe ?>')
@@ -313,43 +336,46 @@ function make_insert_form($nome_classe, $atributos, $num_atributos) {
 }
 
 function make_edit_form($nome_classe, $atributos) {
-    echo "\n";
+    echo "\n";//pula a linha
     ?>
     @extends('adminlte::page')
     @section('content_header')
-    <a href="{{ url( '/<?= strtolower($nome_classe) ?>' )}}" class="btn btn-info">
-        <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
-        Voltar
-    </a>
-    <h1><?php echo $nome_classe . 's' ?></h1>
+    <h1><?php echo $nome_classe ?></h1>
     @stop
 
     @section('content')
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-    <form method='post' action="{{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id.'/update') }}">
+    @include('messages.msgs')
+
+    <form method='post' action="@if(isset($<?= strtolower($nome_classe) ?>)){{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id.'/update') }}@else{{ url('/<?= strtolower($nome_classe) ?>/store') }}@endif">
         <fieldset>
             <?php
             foreach ($atributos as $atributo):
                 $nome_do_atributo = str_replace('_', ' ', ucfirst($atributo));
-                ?>
-                <!-- <?= $nome_do_atributo ?> -->
-                <div class='form-group {{ $errors->any()?$errors->has('<?= $atributo ?>')?'has-error':'has-success':'' }}'>
-                    <label class='control-label' for='<?= $atributo ?>'><?= $nome_do_atributo ?></label>
-                    <input id='<?= $atributo ?>' name='<?= $atributo ?>' type='text' value='{{ empty(old('<?= $atributo ?>')) ? $<?= strtolower($nome_classe) ?>-><?= $atributo ?> : old('<?= $atributo ?>') }}' class='form-control input-md' required>
-                </div>
+                echo "\n";//pula a linha ?>
+            <!-- <?= $nome_do_atributo ?> -->
+            <div class='form-group {{ $errors->any()?$errors->has('<?= $atributo ?>')?'has-error':'has-success':'' }}'>
+                <label class='control-label' for='<?= $atributo ?>'><?= $nome_do_atributo ?></label>
+                <input id='<?= $atributo ?>' name='<?= $atributo ?>' type='text' placeholder='<?= $nome_do_atributo ?>' @if(old('<?= $atributo ?>') || isset($<?= strtolower($nome_classe) ?>)) value='@if(old('<?= $atributo ?>')){{ old('<?= $atributo ?>') }}@else{{$<?= strtolower($nome_classe) ?>-><?= $atributo ?>}}@endif'@endif class='form-control input-md' required>
+            </div>
             <?php endforeach; ?>
             <br>
             {{ csrf_field() }}
             <div class="clearfix"></div>
-            <button type='submit' class='btn btn-lg btn-primary'>Salvar edição</button>
+            <a href="{{ url( '/<?= strtolower($nome_classe) ?>' )}}" class="btn btn-lg btn-info">
+                <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                Voltar
+            </a>
+            <button type='submit' class='btn btn-lg btn-primary'>
+                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                Salvar
+                @if(isset($<?= strtolower($nome_classe) ?>)) Alterações @endif
+            </button>
+            @if(isset($<?= strtolower($nome_classe) ?>))
+                <a href="{{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id.'/destroy')}}" class="btn btn-lg btn-danger">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    Deletar
+                </a>
+            @endif            
         </fieldset>
     </form>
     @stop
@@ -357,7 +383,7 @@ function make_edit_form($nome_classe, $atributos) {
 }
 
 function make_show_view($nome_classe, $atributos) {
-    echo "\n";
+    echo "\n";//pula a linha
     ?>
     @extends('adminlte::page')
     @section('content_header')
