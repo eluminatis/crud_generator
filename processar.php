@@ -8,6 +8,8 @@
  * Modificado por: Girol | andregirol@gmail.com
  */
 require_once 'functions.php';
+require_once 'view_functions.php';
+require_once 'controller_functions.php';
 
 //recebendo os dados do form da index
 $getpost = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -56,12 +58,12 @@ $num_atributos = count($atributos);
                     <?php make_controller($nome_classe, $atributos, $num_atributos); ?>
                 </pre>
             </code->
-    <?php
-    make_forms($nome_classe, $atributos, $num_atributos);
-
-    // index do crud
-    make_index_view($nome_classe, $atributos, $num_atributos);
-    ?>
+            <?php
+            // index do crud
+            make_index_view($nome_classe, $atributos, $num_atributos);
+            // formulario
+            make_form($nome_classe, $atributos, $num_atributos);   
+            ?>
         </div>
     </div>
 </body>
