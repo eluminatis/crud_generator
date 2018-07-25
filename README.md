@@ -1,4 +1,2 @@
-# gerador de classes
-A ideia é simples, você entra com o nome da classe e seus atributos e é gerado os formularios para inserção e edição,
-os métodos que recebem esses forms, o comando sql para gerar a tabela dessa classe no banco e a classe em si com seus atributos e seus metodos de insert,
-delete, update, getObjeto, getTodosOsObjetos e contarLinhas. 
+# CRUD generator
+A idéia é simples, você entra com o nome da classe e seus atributos e é gerado os formularios para inserção e edição, a index com datatable.js, o controller com todos os metodos necessários ao crud, migration, factory e testes básicos para crud em código php para laravel, o projeto tem o objetivo de agilizar o trabalho do dev criando os códigos que são repetitivos.
