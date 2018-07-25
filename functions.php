@@ -11,17 +11,8 @@
 ###########################################################################################################
 function make_routes($nome_classe, $atributos, $numVars) {
     echo "\n";//pula a linha
-    echo "Route::get('/" . strtolower($nome_classe) . "', '$nome_classe" . "Controller@index');";
+    echo "Route::resource('/" . strtolower($nome_classe) . "', '" . $nome_classe . "Controller');";
     echo "\n";//pula a linha
-    echo "Route::get('/" . strtolower($nome_classe) . "/create', '$nome_classe" . "Controller@create');";
-    echo "\n";//pula a linha
-    echo "Route::post('/" . strtolower($nome_classe) . "/store', '$nome_classe" . "Controller@store');";
-    echo "\n";//pula a linha
-    echo "Route::get('/" . strtolower($nome_classe) . "/{" . strtolower($nome_classe) . "}/edit', '$nome_classe" . "Controller@edit');";
-    echo "\n";//pula a linha
-    echo "Route::post('/" . strtolower($nome_classe) . "/{" . strtolower($nome_classe) . "}/update', '$nome_classe" . "Controller@update');";
-    echo "\n";//pula a linha
-    echo "Route::get('/" . strtolower($nome_classe) . "/{" . strtolower($nome_classe) . "}/destroy', '$nome_classe" . "Controller@destroy');";
 }
 
 ### CONTROLLER
@@ -346,7 +337,10 @@ function make_edit_form($nome_classe, $atributos) {
     @section('content')
     @include('messages.msgs')
 
-    <form method='post' action="@if(isset($<?= strtolower($nome_classe) ?>)){{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id.'/update') }}@else{{ url('/<?= strtolower($nome_classe) ?>/store') }}@endif">
+    <form method='post' action="@if(isset($<?= strtolower($nome_classe) ?>)){{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id) }}@else{{ url('/<?= strtolower($nome_classe) ?>') }}@endif">
+        {{ csrf_field() }}
+        @if(isset($<?= strtolower($nome_classe) ?>)){{ method_field('patch') }}@endif
+        
         <fieldset>
             <?php
             foreach ($atributos as $atributo):
@@ -358,9 +352,10 @@ function make_edit_form($nome_classe, $atributos) {
                 <input id='<?= $atributo ?>' name='<?= $atributo ?>' type='text' placeholder='<?= $nome_do_atributo ?>' @if(old('<?= $atributo ?>') || isset($<?= strtolower($nome_classe) ?>)) value='@if(old('<?= $atributo ?>')){{ old('<?= $atributo ?>') }}@else{{$<?= strtolower($nome_classe) ?>-><?= $atributo ?>}}@endif'@endif class='form-control input-md' required>
             </div>
             <?php endforeach; ?>
+            
             <br>
-            {{ csrf_field() }}
             <div class="clearfix"></div>
+
             <a href="{{ url( '/<?= strtolower($nome_classe) ?>' )}}" class="btn btn-lg btn-info">
                 <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
                 Voltar
@@ -371,13 +366,19 @@ function make_edit_form($nome_classe, $atributos) {
                 @if(isset($<?= strtolower($nome_classe) ?>)) Alterações @endif
             </button>
             @if(isset($<?= strtolower($nome_classe) ?>))
-                <a href="{{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id.'/destroy')}}" class="btn btn-lg btn-danger">
+                <div class="btn btn-lg btn-danger" onclick="document.form_deletar.submit()">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                     Deletar
-                </a>
+                </div>
             @endif            
         </fieldset>
     </form>
+    @if(isset($<?= strtolower($nome_classe) ?>))
+        <form action="{{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id)}}" method="post" name="form_deletar">
+            {{ csrf_field() }}
+            {{ method_field('delete') }}
+        </form>
+    @endif
     @stop
     <?php
 }
