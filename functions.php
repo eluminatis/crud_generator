@@ -366,7 +366,7 @@ function make_edit_form($nome_classe, $atributos) {
                 @if(isset($<?= strtolower($nome_classe) ?>)) Alterações @endif
             </button>
             @if(isset($<?= strtolower($nome_classe) ?>))
-                <div class="btn btn-lg btn-danger" onclick="document.form_deletar.submit()">
+                <div class="btn btn-lg btn-danger" onclick="if(confirm('confirmar exclusão?')){document.form_deletar.submit()}">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                     Deletar
                 </div>
