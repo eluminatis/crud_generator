@@ -46,10 +46,24 @@ $v['num_atributos'] = count($v['atributos']);
 <body>
     <div class="container">
         <div class="row">
-            <h2>Rotas</h2>
+            <h2>Rota</h2>
             <code->
                 <pre>
                     <?php make_routes($v); ?>
+                </pre>
+            </code->
+
+            <h2>Migration</h2>
+            <code->
+                <pre>
+                    <?php make_migration($v); ?>
+                </pre>
+            </code->
+
+            <h2>Factory</h2>
+            <code->
+                <pre>
+                    <?php make_factory($v); ?>
                 </pre>
             </code->
 
