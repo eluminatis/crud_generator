@@ -21,7 +21,7 @@ function make_index_view($nome_classe, $atributos, $numVars) {
 				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . $height . 'px">';
     echo "\n";//pula a linha
     ?>
-    
+
 @extends('adminlte::page')
 @section('content_header')
 <h1><?php echo $nome_classe . 's' ?></h1>
@@ -37,23 +37,19 @@ function make_index_view($nome_classe, $atributos, $numVars) {
         <table id="mytable" class="display" cellspacing="0" width="100%">
             <thead>
                 <tr>
+                    <th style="width: 30px;">Id</th>
                     <th>Id</th>
-                    <th>#######</th>
-                    <th>#######</th>
-                    <th style="width:125px">Visualizar</th>
-                    <th style="width:125px">Editar</th>
-                    <th style="width:125px">Apagar</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($<?= strtolower($nome_classe) ?>s as $<?= strtolower($nome_classe) ?>)
                 <tr>
-                    <td>{{ $<?= strtolower($nome_classe) ?>->id }}</td>
-                    <td>{{ $<?= strtolower($nome_classe) ?>->####### }}</td>
-                    <td>{{ $<?= strtolower($nome_classe) ?>->####### }}</td>
-                    <td><a href="{{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id.'/show') }}" class="btn btn-lg btn-block btn-success">Visualizar</a></td>
-                    <td><a href="{{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id.'/edit') }}" class="btn btn-lg btn-block btn-primary">Editar</a></td>
-                    <td><a href="{{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id.'/destroy') }}" class="btn btn-lg btn-block btn-danger">Apagar</a></td>
+                    <td>
+                        <a href="{{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id.'/edit') }}">{{ $<?= strtolower($nome_classe) ?>->id }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ url('/<?= strtolower($nome_classe) ?>/'.$<?= strtolower($nome_classe) ?>->id.'/edit') }}">{{ $<?= strtolower($nome_classe) ?>->id }}</a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
