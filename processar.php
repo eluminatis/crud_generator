@@ -14,11 +14,12 @@ require_once 'controller_functions.php';
 //recebendo os dados do form da index
 $getpost = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 // Busca os atributos preenchidos pelo usuário e transforma em array
-$atributos = array_map('trim', explode(',', $getpost['atributos']));
+$v['atributos'] = array_map('trim', explode(',', $getpost['atributos']));
 //recebendo o nome da classe e colocando a primeira letra maiuscula ja que se trata de um nome de classe *-*
-$nome_classe = ucfirst(strtolower($getpost['nome']));
+$v['nome_classe'] = ucfirst(strtolower($getpost['nome']));
+$v['nome_classe_min'] = strtolower($getpost['nome']);
 //gerando uma variavel com a contagem dos attrs
-$num_atributos = count($atributos);
+$v['num_atributos'] = count($v['atributos']);
 
 ?>
 <!DOCTYPE html>
@@ -48,21 +49,21 @@ $num_atributos = count($atributos);
             <h2>Rotas</h2>
             <code->
                 <pre>
-                    <?php make_routes($nome_classe, $atributos, $num_atributos); ?>
+                    <?php make_routes($v); ?>
                 </pre>
             </code->
 
             <h2>Controller</h2>
             <code->
                 <pre>
-                    <?php make_controller($nome_classe, $atributos, $num_atributos); ?>
+                    <?php make_controller($v); ?>
                 </pre>
             </code->
             <?php
             // index do crud
-            make_index_view($nome_classe, $atributos, $num_atributos);
+            make_index_view($v);
             // formulario
-            make_form($nome_classe, $atributos, $num_atributos);   
+            make_form($v);
             ?>
         </div>
     </div>

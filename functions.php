@@ -9,9 +9,9 @@
 
 ### ROTAS
 ###########################################################################################################
-function make_routes($nome_classe, $atributos, $numVars) {
+function make_routes($v) {
     echo "\n";//pula a linha
-    echo "Route::resource('/" . strtolower($nome_classe) . "', '" . $nome_classe . "Controller');";
+    echo "Route::resource('/" . $v["nome_classe_min"] . "', '" . $v["nome_classe"] . "Controller');";
     echo "\n";//pula a linha
 }
 

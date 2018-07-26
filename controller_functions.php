@@ -3,21 +3,21 @@
 #                                               CONTROLLER                                                #
 ###########################################################################################################
 
-function make_controller($nome_classe, $atributos, $numVars) {
-    make_index_method($nome_classe, $atributos, $numVars);
+function make_controller($v) {
+    make_index_method($v);
 
-    make_create_method($nome_classe, $atributos, $numVars);
+    make_create_method($v);
 
-    make_store_method($nome_classe, $atributos, $numVars);
+    make_store_method($v);
 
-    make_edit_method($nome_classe, $atributos, $numVars);
+    make_edit_method($v);
 
-    make_update_method($nome_classe, $atributos, $numVars);
+    make_update_method($v);
 
-    make_destroy_method($nome_classe, $atributos, $numVars);
+    make_destroy_method($v);
 }
 
-function make_index_method($nome_classe, $atributos, $numVars) {
+function make_index_method($v) {
     echo('
 /**
  * Display a listing of the resource.
@@ -26,13 +26,13 @@ function make_index_method($nome_classe, $atributos, $numVars) {
  */
 public function index()
 {
-    $data["'.strtolower($nome_classe).'s"] = '. $nome_classe . '::all();
-    return view("' . strtolower($nome_classe) . '.index", $data);;
+    $data["'.$v['nome_classe_min'].'s"] = '. $v['nome_classe'] . '::all();
+    return view("' . $v['nome_classe_min'] . '.index", $data);;
 }
     ');
 }
 
-function make_create_method($nome_classe, $atributos, $numVars) {
+function make_create_method($v) {
     echo('
 /**
  * Show the form for creating a new resource.
@@ -41,12 +41,12 @@ function make_create_method($nome_classe, $atributos, $numVars) {
  */
 public function create()
 {
-    return view("' . strtolower($nome_classe) . '.form");
+    return view("' . $v['nome_classe_min'] . '.form");
 }
     ');
 }
 
-function make_store_method($nome_classe, $atributos, $numVars) {
+function make_store_method($v) {
     echo('
 /**
  * Store a newly created resource in storage.
@@ -60,79 +60,79 @@ public function store(Request $request)
     ');
     echo "\n";//pula a linha
     //criando as validações
-foreach ($atributos as $atributo) {
+foreach ($v["atributos"] as $atributo) {
     echo "        '$atributo' => 'required|min:4|max:191',";
     echo "\n";//pula a linha
 }
     echo('
     ]);
 
-    $' . strtolower($nome_classe) . ' = new ' . $nome_classe . '();
+    $' . $v['nome_classe_min'] . ' = new ' . $v['nome_classe'] . '();
     ');
     echo "\n";//pula a linha
     //preenchendo os atributos do objeto recém criado
-foreach ($atributos as $atributo) {
-    echo '    $' . strtolower($nome_classe) . '->' . $atributo . ' = ' . '$request->' . $atributo . ';';
+foreach ($v["atributos"] as $atributo) {
+    echo '    $' . $v['nome_classe_min'] . '->' . $atributo . ' = ' . '$request->' . $atributo . ';';
     echo "\n";//pula a linha
 }
     //persistindo o objeto
-    echo '    $' . strtolower($nome_classe) . '->save();';
+    echo '    $' . $v['nome_classe_min'] . '->save();';
     //mensagem flash de sucesso e retorno para a rota index
     echo('
     \Session::flash("flash_msg_success", "Armazenamento realizado com sucesso.");
-    return redirect("/' . strtolower($nome_classe) . '");
+    return redirect("/' . $v['nome_classe_min'] . '");
 }
     ');
 }
 
-function make_show_method($nome_classe, $atributos, $numVars) {
+function make_show_method($v) {
     echo('
 /**
  * Display the specified resource.
  *
- * @param  \App\Models\\'.$nome_classe.' $'.strtolower($nome_classe).'
+ * @param  \App\Models\\'.$v["nome_classe"].' $'.$v['nome_classe_min'].'
  * @return \Illuminate\Http\Response
  */
-public function show('.$nome_classe.' $'.strtolower($nome_classe).')
+public function show('.$v["nome_classe"].' $'.$v['nome_classe_min'].')
 {
-    $data["'.strtolower($nome_classe).'"] = $'.strtolower($nome_classe).';
-    return view("'.strtolower($nome_classe).'.show", $data);
+    $data["'.$v['nome_classe_min'].'"] = $'.$v['nome_classe_min'].';
+    return view("'.$v['nome_classe_min'].'.show", $data);
 }
     ');
 }
 
-function make_edit_method($nome_classe, $atributos, $numVars) {
+function make_edit_method($v) {
     echo('
 /**
  * Show the form for editing the specified resource.
  *
- * @param  \App\Models\\'.$nome_classe.' $'.strtolower($nome_classe).'
+ * @param  \App\Models\\'.$v["nome_classe"].' $'.$v['nome_classe_min'].'
  * @return \Illuminate\Http\Response
  */
-public function edit('.$nome_classe.' $'.strtolower($nome_classe).')
+public function edit('.$v["nome_classe"].' $'.$v['nome_classe_min'].')
 {
-    $data["'.strtolower($nome_classe).'"] = $'.strtolower($nome_classe).';
-    return view("'.strtolower($nome_classe).'.form", $data);
+    $data["'.$v['nome_classe_min'].'"] = $'.$v['nome_classe_min'].';
+    return view("'.$v['nome_classe_min'].'.form", $data);
 }
     ');
 }
 
-function make_update_method($nome_classe, $atributos, $numVars) {
+function make_update_method($v) {
     echo('
 /**
  * Update the specified resource in storage.
  *
  * @param  \Illuminate\Http\Request  $request
- * @param  \App\Models\\'.$nome_classe.' $'.strtolower($nome_classe).'
+ * @param  \App\Models\\'.$v["nome_classe"].' $'.$v['nome_classe_min'].'
  * @return \Illuminate\Http\Response
  */
-public function update(Request $request, '.$nome_classe.' $'.strtolower($nome_classe).')
+public function update(Request $request, '.$v["nome_classe"].' $'.$v['nome_classe_min'].')
 {
     $request->validate([
     ');
     echo "\n";//pula a linha
     //criando as validações
-foreach ($atributos as $atributo) {
+foreach ($v["atributos"] as $atributo) {
     echo "        '$atributo' => 'required|min:4|max:191',";
     echo "\n";//pula a linha
 }
@@ -140,34 +140,34 @@ foreach ($atributos as $atributo) {
     echo('    ]);');
     echo "\n\n";
     //preenchendo os atributos do objeto recém criado
-foreach ($atributos as $atributo) {
-    echo '    $' . strtolower($nome_classe) . '->' . $atributo . ' = ' . '$request->' . $atributo . ';';
+foreach ($v["atributos"] as $atributo) {
+    echo '    $' . $v['nome_classe_min'] . '->' . $atributo . ' = ' . '$request->' . $atributo . ';';
     echo "\n";//pula a linha
 }
     //persistindo o objeto
-    echo '    $' . strtolower($nome_classe) . '->save();';
+    echo '    $' . $v['nome_classe_min'] . '->save();';
     echo "\n";//pula a linha
     //mensagem flash de sucesso e retorno para a rota index
     echo('
     \Session::flash("flash_msg_success", "Update realizado com sucesso.");
-    return redirect("/' . strtolower($nome_classe) . '");
+    return redirect("/' . $v['nome_classe_min'] . '");
 }
     ');
 }
 
-function make_destroy_method($nome_classe, $atributos, $numVars) {
+function make_destroy_method($v) {
     echo('
 /**
  * Remove the specified resource from storage.
  *
- * @param  \App\Models\\'.$nome_classe.' $'.strtolower($nome_classe).'
+ * @param  \App\Models\\'.$v["nome_classe"].' $'.$v['nome_classe_min'].'
  * @return \Illuminate\Http\Response
  */
-public function destroy('.$nome_classe.' $'.strtolower($nome_classe).')
+public function destroy('.$v["nome_classe"].' $'.$v['nome_classe_min'].')
 {
-    $'.strtolower($nome_classe).'->delete();
+    $'.$v['nome_classe_min'].'->delete();
     \Session::flash("flash_msg_success", "Exclusão realizada com sucesso.");
-    return redirect("/' . strtolower($nome_classe) . '");
+    return redirect("/' . $v['nome_classe_min'] . '");
 }
     ');
 }
