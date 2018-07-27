@@ -49,6 +49,14 @@ extract($v);
         font-size: 17px;
         font-family: monospace;
     }
+
+    textarea {
+        width: 100%; 
+        background-color: #f8f9fa;
+        border: none;
+        font-family: monospace;
+
+    }
     </style>
 </head>
 <body>
@@ -93,13 +101,23 @@ extract($v);
                     <pre id="controller"><?php make_controller($v); ?></pre>
                 </code>
                 
-            <h1> View <?= $nome_classe_min ?>.index </h1>
-            <?php
-            // index do crud
-            make_index_view($v);
-            // formulario
-            make_form($v);
-            ?>
+                <!-- index do crud -->
+                <h1> View <?= $nome_classe_min ?>.index 
+                    <button data-clipboard-target="#index_view" class="btn btn-sm btn-success pull-left">
+                        copiar &lt;/&gt;
+                    </button>
+                </h1>
+                <?php  make_index_view($v); ?>
+                
+                <!-- formulario base para CRUD -->
+                <h1>View <?= $nome_classe_min ?>.form
+                    <button data-clipboard-target="#base_form" class="btn btn-sm btn-success pull-left">
+                        copiar &lt;/&gt;
+                    </button>
+                </h1>
+                <div id="base_form">
+                    <?php  make_view_base_form($v); ?>
+                </div>
             </div>
 
         </div>
