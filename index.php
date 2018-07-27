@@ -24,7 +24,7 @@
 
                 <div class="form-group">
                     <label for="nome">Nome da classe</label>
-                    <input type="text" class="form-control" >
+                    <input type="text" name="nome" class="form-control">
                 </div>
                 
                 <div class="form-group">
