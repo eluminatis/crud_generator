@@ -108,7 +108,7 @@ function make_view_base_form($v)
 
             $nome_do_atributo = str_replace('_', ' ', ucfirst($atributo));
             
-            echo PHP_EOL . "<!-- {$nome_do_atributo}  -->";
+            echo PHP_EOL . "        <!-- {$nome_do_atributo}  -->" . PHP_EOL;
             ?>
         <div class='form-group {{ $errors->any()?$errors->has('<?= $atributo ?>')?'has-error':'has-success':'' }}'>
             <label class='control-label' for='<?= $atributo ?>'><?= $nome_do_atributo ?></label>
