@@ -15,6 +15,8 @@ function make_controller($v) {
     make_update_method($v);
 
     make_destroy_method($v);
+
+    make_runValidate_method($v);
 }
 
 function make_index_method($v) {
@@ -56,17 +58,9 @@ function make_store_method($v) {
  */
 public function store(Request $request)
 {
-    $request->validate([
+    $this->runValidate($request);
     ');
-    echo "\n";//pula a linha
-    //criando as validações
-foreach ($v["atributos"] as $atributo) {
-    echo "        '$atributo' => 'required|min:4|max:191',";
-    echo "\n";//pula a linha
-}
     echo('
-    ]);
-
     $' . $v['nome_classe_min'] . ' = new ' . $v['nome_classe'] . '();
     ');
     echo "\n";//pula a linha
@@ -128,18 +122,10 @@ function make_update_method($v) {
  */
 public function update(Request $request, '.$v["nome_classe"].' $'.$v['nome_classe_min'].')
 {
-    $request->validate([
+    $this->runValidate($request);
     ');
     echo "\n";//pula a linha
-    //criando as validações
-foreach ($v["atributos"] as $atributo) {
-    echo "        '$atributo' => 'required|min:4|max:191',";
-    echo "\n";//pula a linha
-}
-    echo "\n";//pula a linha
-    echo('    ]);');
-    echo "\n\n";
-    //preenchendo os atributos do objeto recém criado
+    //preenchendo os atributos do objeto recém atualizado
 foreach ($v["atributos"] as $atributo) {
     echo '    $' . $v['nome_classe_min'] . '->' . $atributo . ' = ' . '$request->' . $atributo . ';';
     echo "\n";//pula a linha
@@ -170,4 +156,27 @@ public function destroy('.$v["nome_classe"].' $'.$v['nome_classe_min'].')
     return redirect("/' . $v['nome_classe_min'] . '");
 }
     ');
+}
+
+function make_runValidate_method($v)
+{
+    echo('
+/**
+ * Performs the validations in the request.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ */
+private function runValidate(Request $request)
+{
+    $request->validate([
+    ');
+    echo "\n";//pula a linha
+    //criando as validações
+foreach ($v["atributos"] as $atributo) {
+    echo "        '$atributo' => 'required|min:4|max:191',";
+    echo "\n";//pula a linha
+}
+    echo "\n";//pula a linha
+    echo('    ]);');
+    echo "\n}";
 }
