@@ -3,28 +3,37 @@
     <head>
         <meta charset="UTF-8">
         <title>Gerador automático de cruds</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     </head>
     <style>
         * {
-            font-family: sans-serif;
+            /* font-family: sans-serif; */
         }
     </style>
-    <body style="background: #cccccc">
-        <div style="width: 60%; margin: 15px auto;">
-            <h1>Projeto gerador de cruds</h1>
+    <body>
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class="display-4">Projeto gerador de cruds</h1>
+                <hr class="my-4">
+                <p class="lead">
+                    Adicione o nome da classe e a lista de atributos dela no formulário abaixo e clique em enviar
+                </p>
+            </div>
 
-            <h2>
-                Adicione o nome da classe e a lista de atributos dela no formulário abaixo e clique em enviar
-            </h2>
-            <form method="post" action="processar.php">
-                <label for="nome" style="font-size: 18pt;">Nome da classe</label><br>
-                <input type="text" style="font-size: 18pt; background-color: #000; color:#fff; width: 500px;" id="nome" name="nome"><br><br>
+                <form method="post" action="processar.php">
 
-                <label for="atributos" style="font-size: 18pt;">Adicione os atributos da classe separados por virgula ','</label><br><br>
-                <textarea rows="10" name="atributos" style="font-size: 18pt; background-color: #000; color:#fff; width: 100%"></textarea><br><br>
+                <div class="form-group">
+                    <label for="nome">Nome da classe</label>
+                    <input type="text" name="nome" class="form-control">
+                </div>
+                
+                <div class="form-group">
 
-                <br /><br />
-                <button type="submit" style="width: 250px; height: 100px;font-size: 18pt;">Enviar</button>
+                    <label for="atributos">Adicione os atributos da classe separados por virgula '<code>,</code>'</label>
+                    <textarea rows="10" name="atributos" class="form-control"></textarea>
+                </div>
+   
+                <button class="btn btn-warning btn-lg btn-block" type="submit">Enviar</button>
             </form>
         </div>
     </body>

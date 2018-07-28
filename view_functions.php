@@ -1,36 +1,24 @@
 <?php
-function make_form($v) {
-    $height = $v['num_atributos'] * 160 + 900; //calculando o tamanho do textarea
-
-    echo '
-				<h1>View '.$v["nome_classe_min"].'.form</h1>
-				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . $height . 'px"> ';
-    make_view_form($v);
-    echo "</textarea>";
-}
-
-
 ###################################################################################################
 #                                       VIEW INDEX                                                #
 ###################################################################################################
-function make_index_view($v) {
-    $height = 1500; //calculando o tamanho do textarea
+function make_index_view($v)
+{
+extract($v);
 
-    echo '
-				<h1>View '.$v["nome_classe_min"].'.index</h1>
-				<textarea style="width: 100%; background-color: #000; color:#fff; min-height:' . $height . 'px">';
-    echo "\n";//pula a linha
-    ?>
+$height = 1500; ?>
+
+<textarea  id="index_view" style="min-height:<?= $height ?>px" readonly>
 
 @extends('adminlte::page')
 @section('content_header')
-<h1><?php echo $v['nome_classe'] . 's' ?></h1>
+<h1><?= $nome_classe . 's' ?></h1>
 @stop
 
 @include('messages.msgs')
 
-<a href="{{ url('/<?= $v["nome_classe_min"] ?>/create') }}" class="btn btn-lg btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Novo cadastro</a>
-@if($<?= $v["nome_classe_min"] ?>s->all())
+<a href="{{ url('/<?= $nome_classe_min ?>/create') }}" class="btn btn-lg btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Novo cadastro</a>
+@if($<?= $nome_classe_min ?>s->all())
 <br /><br />
 <div class='box'>
     <div class='box-body' style="overflow: auto;">
@@ -42,13 +30,13 @@ function make_index_view($v) {
                 </tr>
             </thead>
             <tbody>
-                @foreach($<?= $v["nome_classe_min"] ?>s as $<?= $v["nome_classe_min"] ?>)
+                @foreach($<?= $nome_classe_min ?>s as $<?= $nome_classe_min ?>)
                 <tr>
                     <td>
-                        <a href="{{ url('/<?= $v["nome_classe_min"] ?>/'.$<?= $v["nome_classe_min"] ?>->id.'/edit') }}">{{ $<?= $v["nome_classe_min"] ?>->id }}</a>
+                        <a href="{{ url('/<?= $nome_classe_min ?>/'.$<?= $nome_classe_min ?>->id.'/edit') }}">{{ $<?= $nome_classe_min ?>->id }}</a>
                     </td>
                     <td>
-                        <a href="{{ url('/<?= $v["nome_classe_min"] ?>/'.$<?= $v["nome_classe_min"] ?>->id.'/edit') }}">{{ $<?= $v["nome_classe_min"] ?>->id }}</a>
+                        <a href="{{ url('/<?= $nome_classe_min ?>/'.$<?= $nome_classe_min ?>->id.'/edit') }}">{{ $<?= $nome_classe_min ?>->id }}</a>
                     </td>
                 </tr>
                 @endforeach
@@ -58,7 +46,7 @@ function make_index_view($v) {
 </div>
 @else
 <br /><br />
-<p>Não há <?= $v["nome_classe_min"] ?>s cadastrados</p>
+<p>Não há <?= $nome_classe_min ?>s cadastrados</p>
 @endif
 @stop
 
@@ -87,54 +75,61 @@ function make_index_view($v) {
 </script>
 @stop
 
-    <?php
-    echo "</textarea>";
+</textarea>
+
+<?php 
 }
 
 ###################################################################################################
 #                                       VIEW FORM                                                 #
 ###################################################################################################
-function make_view_form($v) {
-    echo "\n";//pula a linha
-    ?>
+function make_view_base_form($v) 
+{
+    extract($v);
+
+    $height = $num_atributos * 160 + 900; //calculando o tamanho do textarea
+?>
+<textarea id="base_form" style="min-height:<?= $height ?>px" readonly>
 
 @extends('adminlte::page')
 @section('content_header')
-<h1><?php echo $v['nome_classe'] ?></h1>
+<h1><?= $nome_classe ?></h1>
 @stop
 
 @section('content')
 @include('messages.msgs')
 
-<form method='post' action="@if(isset($<?= $v["nome_classe_min"] ?>)){{ url('/<?= $v["nome_classe_min"] ?>/'.$<?= $v["nome_classe_min"] ?>->id) }}@else{{ url('/<?= $v["nome_classe_min"] ?>') }}@endif">
+<form method='post' action="@if(isset($<?= $nome_classe_min ?>)){{ url('/<?= $nome_classe_min ?>/'.$<?= $nome_classe_min ?>->id) }}@else{{ url('/<?= $nome_classe_min ?>') }}@endif">
     {{ csrf_field() }}
-    @if(isset($<?= $v["nome_classe_min"] ?>)){{ method_field('patch') }}@endif
+    @if(isset($<?= $nome_classe_min ?>)){{ method_field('patch') }}@endif
     
     <fieldset>
-        <?php
-        foreach ($v['atributos'] as $atributo):
+        <?php foreach ($atributos as $atributo) :
+
             $nome_do_atributo = str_replace('_', ' ', ucfirst($atributo));
-            echo "\n";//pula a linha ?>
-        <!-- <?= $nome_do_atributo ?> -->
+            
+            echo PHP_EOL . "<!-- {$nome_do_atributo}  -->";
+            ?>
         <div class='form-group {{ $errors->any()?$errors->has('<?= $atributo ?>')?'has-error':'has-success':'' }}'>
             <label class='control-label' for='<?= $atributo ?>'><?= $nome_do_atributo ?></label>
-            <input id='<?= $atributo ?>' name='<?= $atributo ?>' type='text' placeholder='<?= $nome_do_atributo ?>' @if(old('<?= $atributo ?>') || isset($<?= $v["nome_classe_min"] ?>)) value='@if(old('<?= $atributo ?>')){{ old('<?= $atributo ?>') }}@else{{$<?= $v["nome_classe_min"] ?>-><?= $atributo ?>}}@endif'@endif class='form-control input-md' required>
+            <input id='<?= $atributo ?>' name='<?= $atributo ?>' type='text' placeholder='<?= $nome_do_atributo ?>' @if(old('<?= $atributo ?>') || isset($<?= $nome_classe_min ?>)) value='@if(old('<?= $atributo ?>')){{ old('<?= $atributo ?>') }}@else{{$<?= $nome_classe_min ?>-><?= $atributo ?>}}@endif'@endif class='form-control input-md' required>
         </div>
+        
         <?php endforeach; ?>
         
         <br>
         <div class="clearfix"></div>
 
-        <a href="{{ url( '/<?= $v["nome_classe_min"] ?>' )}}" class="btn btn-lg btn-info">
+        <a href="{{ url( '/<?= $nome_classe_min ?>' )}}" class="btn btn-lg btn-info">
             <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
             Voltar
         </a>
         <button type='submit' class='btn btn-lg btn-primary'>
             <i class="fa fa-floppy-o" aria-hidden="true"></i>
             Salvar
-            @if(isset($<?= $v["nome_classe_min"] ?>)) Alterações @endif
+            @if(isset($<?= $nome_classe_min ?>)) Alterações @endif
         </button>
-        @if(isset($<?= $v["nome_classe_min"] ?>))
+        @if(isset($<?= $nome_classe_min ?>))
             <div class="btn btn-lg btn-danger" onclick="if(confirm('confirmar exclusão?')){document.form_deletar.submit()}">
                 <i class="fa fa-trash" aria-hidden="true"></i>
                 Deletar
@@ -142,13 +137,14 @@ function make_view_form($v) {
         @endif            
     </fieldset>
 </form>
-@if(isset($<?= $v["nome_classe_min"] ?>))
-    <form action="{{ url('/<?= $v["nome_classe_min"] ?>/'.$<?= $v["nome_classe_min"] ?>->id)}}" method="post" name="form_deletar">
+@if(isset($<?= $nome_classe_min ?>))
+    <form action="{{ url('/<?= $nome_classe_min ?>/'.$<?= $nome_classe_min ?>->id)}}" method="post" name="form_deletar">
         {{ csrf_field() }}
         {{ method_field('delete') }}
     </form>
 @endif
 @stop
 
+</textarea>
 <?php
-}
+} // fim de make_view_base_form()

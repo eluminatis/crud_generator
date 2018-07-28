@@ -11,15 +11,24 @@ require_once 'functions.php';
 require_once 'view_functions.php';
 require_once 'controller_functions.php';
 
-//recebendo os dados do form da index
+// Gera um array para transporte de dados
 $getpost = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-// Busca os atributos preenchidos pelo usuário e transforma em array
-$v['atributos'] = array_map('trim', explode(',', $getpost['atributos']));
-//recebendo o nome da classe e colocando a primeira letra maiuscula ja que se trata de um nome de classe *-*
-$v['nome_classe'] = ucfirst(strtolower($getpost['nome']));
-$v['nome_classe_min'] = strtolower($getpost['nome']);
+
+$v = [
+    'atributos' => array_map('trim', explode(',', $getpost['atributos'])),
+
+    //recebendo o nome da classe e colocando a primeira letra maiuscula ja que se trata de um nome de classe *-*
+    'nome_classe' => ucfirst(strtolower($getpost['nome'])),
+
+    'nome_classe_min' => strtolower($getpost['nome']),
+
+    // 'num_atributos' => count($v['atributos']),
+];
+
 //gerando uma variavel com a contagem dos attrs
 $v['num_atributos'] = count($v['atributos']);
+// Gera variáveis com os mesmos nomes das chaves do array:
+extract($v);
 
 ?>
 <!DOCTYPE html>
@@ -30,56 +39,97 @@ $v['num_atributos'] = count($v['atributos']);
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Codigo fonte</title>
     <!-- Latest compiled and minified bootstrap 3 CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <style>
-    body{
-        background-color: #0c0c0c;
-    }
-    h2{color:#fff}
-    pre{
-        background-color: black;
-        color: #fff;
+   
+    pre {
+        background-color: #f8f9fa;
+        padding: 20px;
+        /* color: #28a745; */
         font-size: 17px;
+        font-family: monospace;
+    }
+
+    textarea {
+        width: 100%; 
+        background-color: #f8f9fa;
+        border: none;
+        font-family: monospace;
+
     }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="row">
-            <h2>Rota</h2>
-            <code->
-                <pre>
-                    <?php make_routes($v); ?>
-                </pre>
-            </code->
+            <div class="col-md-12">
+                
+                <h2> Rota 
+                    <button data-clipboard-target="#rotas" class="btn btn-sm btn-success pull-left">
+                        copiar &lt;/&gt;
+                    </button>
+                </h2>
+                
+                <code>
+                    <pre id="rotas"><?php make_routes($v); ?></pre>
+                </code>
 
-            <h2>Migration</h2>
-            <code->
-                <pre>
-                    <?php make_migration($v); ?>
-                </pre>
-            </code->
+                <h2> Migration
+                    <button data-clipboard-target="#migration" class="btn btn-sm btn-success pull-left">
+                        copiar &lt;/&gt;
+                    </button>
+                </h2>
+                <code>
+                    <pre id="migration"><?php make_migration($v); ?></pre>
+                </code>
 
-            <h2>Factory</h2>
-            <code->
-                <pre>
-                    <?php make_factory($v); ?>
-                </pre>
-            </code->
+                <h2> Factory
+                    <button data-clipboard-target="#factory" class="btn btn-sm btn-success pull-left">
+                        copiar &lt;/&gt;
+                    </button>
+                </h2>
+                <code>
+                    <pre id="factory"><?php make_factory($v); ?></pre>
+                </code>
 
-            <h2>Controller</h2>
-            <code->
-                <pre>
-                    <?php make_controller($v); ?>
-                </pre>
-            </code->
-            <?php
-            // index do crud
-            make_index_view($v);
-            // formulario
-            make_form($v);
-            ?>
+                <h2> Controller
+                    <button data-clipboard-target="#controller" class="btn btn-sm btn-success pull-left">
+                        copiar &lt;/&gt;
+                    </button>
+                </h2>
+                <code>
+                    <pre id="controller"><?php make_controller($v); ?></pre>
+                </code>
+                
+                <!-- index do crud -->
+                <h1> View <?= $nome_classe_min ?>.index 
+                    <button data-clipboard-target="#index_view" class="btn btn-sm btn-success pull-left">
+                        copiar &lt;/&gt;
+                    </button>
+                </h1>
+                <?php  make_index_view($v); ?>
+                
+                <!-- formulario base para CRUD -->
+                <h1>View <?= $nome_classe_min ?>.form
+                    <button data-clipboard-target="#base_form" class="btn btn-sm btn-success pull-left">
+                        copiar &lt;/&gt;
+                    </button>
+                </h1>
+                <div id="base_form">
+                    <?php  make_view_base_form($v); ?>
+                </div>
+            </div>
+
         </div>
     </div>
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <!-- Copy to Clipboard plugin -->
+    <script type="text/javascript" src="https://milankyncl.github.io/jquery-copy-to-clipboard/jquery.copy-to-clipboard.js"></script>
+    <script>
+        $(document).ready(function(){
+
+        });
+    </script>
 </body>
 </html>
