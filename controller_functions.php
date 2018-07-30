@@ -4,6 +4,8 @@
 ###########################################################################################################
 
 function make_controller($v) {
+    echo '#colocar no topo >>>> use App\Http\Requests\\'. $v['nome_classe'] .'Request'. PHP_EOL;
+
     make_index_method($v);
 
     make_create_method($v);
@@ -53,10 +55,10 @@ function make_store_method($v) {
 /**
  * Store a newly created resource in storage.
  *
- * @param  \Illuminate\Http\Request  $request
+ * @param  \App\Http\Requests\\' . $v['nome_classe'] . 'Request  $request
  * @return \Illuminate\Http\Response
  */
-public function store(Request $request)
+public function store(' . $v['nome_classe'] . 'Request $request)
 {
     $this->runValidate($request);
     ');
@@ -116,11 +118,11 @@ function make_update_method($v) {
 /**
  * Update the specified resource in storage.
  *
- * @param  \Illuminate\Http\Request  $request
+ * @param  \App\Http\Requests\\' . $v['nome_classe'] . 'Request  $request
  * @param  \App\Models\\'.$v["nome_classe"].' $'.$v['nome_classe_min'].'
  * @return \Illuminate\Http\Response
  */
-public function update(Request $request, '.$v["nome_classe"].' $'.$v['nome_classe_min'].')
+public function update(' . $v['nome_classe'] . 'Request $request, '.$v["nome_classe"].' $'.$v['nome_classe_min'].')
 {
     $this->runValidate($request);
     ');

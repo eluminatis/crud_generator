@@ -30,6 +30,38 @@ function make_factory($v)
     }
 }
 
+function make_request($v){
+    echo('
+/**
+ * Determine if the user is authorized to make this request.
+ *
+ * @return bool
+ */
+public function authorize()
+{
+    return true;
+}
+
+/**
+ * Get the validation rules that apply to the request.
+ *
+ * @return array
+ */
+public function rules()
+{
+    return [
+    ');
+    echo "\n";//pula a linha
+    //criando as validações
+foreach ($v["atributos"] as $atributo) {
+    echo "        '$atributo' => 'required|min:4|max:191',";
+    echo "\n";//pula a linha
+}
+    echo "\n";//pula a linha
+    echo('    ];');
+    echo "\n}";
+}
+
 
 
 

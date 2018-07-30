@@ -64,12 +64,34 @@ extract($v);
         <div class="row">
             <div class="col-md-12">
                 
+                <h2> Comandos artisan</h2>
+                <p>
+                    Scaffold do recurso
+                    <button data-clipboard-target="#comando_make_model" class="btn btn-sm btn-success pull-left">
+                        copiar &lt;/&gt;
+                    </button>
+                </p>
+                
+                <code id="comando_make_model">
+                    php artisan make:model --all Models\\<?= $nome_classe ?>
+                </code>
+                <br><br>
+                <p>
+                    Request personalizada
+                    <button data-clipboard-target="#comando_make_request" class="btn btn-sm btn-success pull-left">
+                        copiar &lt;/&gt;
+                    </button>
+                </p>
+                <code id="comando_make_request">
+                    php artisan make:request <?= $nome_classe ?>Request
+                </code>
+                <br><br>
+
                 <h2> Rota 
                     <button data-clipboard-target="#rotas" class="btn btn-sm btn-success pull-left">
                         copiar &lt;/&gt;
                     </button>
                 </h2>
-                
                 <code>
                     <pre id="rotas"><?php make_routes($v); ?></pre>
                 </code>
@@ -90,6 +112,15 @@ extract($v);
                 </h2>
                 <code>
                     <pre id="factory"><?php make_factory($v); ?></pre>
+                </code>
+
+                <h2> <?= $nome_classe ?>Request
+                    <button data-clipboard-target="#request" class="btn btn-sm btn-success pull-left">
+                        copiar &lt;/&gt;
+                    </button>
+                </h2>
+                <code>
+                    <pre id="request"><?php make_request($v); ?></pre>
                 </code>
 
                 <h2> Controller
