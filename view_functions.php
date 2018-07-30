@@ -27,7 +27,8 @@ $height = 1500; ?>
             <thead>
                 <tr>
                     <th style="width: 30px;">Id</th>
-                    <th>Id</th>
+                    <th><?= ucfirst($atributos[0]) ?></th>
+                    <th><?= ucfirst($atributos[1]) ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -37,7 +38,10 @@ $height = 1500; ?>
                         <a href="{{ url('/<?= $nome_classe_min ?>/'.$<?= $nome_classe_min ?>->id.'/edit') }}">{{ $<?= $nome_classe_min ?>->id }}</a>
                     </td>
                     <td>
-                        <a href="{{ url('/<?= $nome_classe_min ?>/'.$<?= $nome_classe_min ?>->id.'/edit') }}">{{ $<?= $nome_classe_min ?>->id }}</a>
+                        <a href="{{ url('/<?= $nome_classe_min ?>/'.$<?= $nome_classe_min ?>->id.'/edit') }}">{{ $<?= $nome_classe_min ?>-><?= $atributos[0] ?> }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ url('/<?= $nome_classe_min ?>/'.$<?= $nome_classe_min ?>->id.'/edit') }}">{{ $<?= $nome_classe_min ?>-><?= $atributos[1] ?> }}</a>
                     </td>
                 </tr>
                 @endforeach
