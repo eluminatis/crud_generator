@@ -17,8 +17,6 @@ function make_controller($v) {
     make_update_method($v);
 
     make_destroy_method($v);
-
-    make_runValidate_method($v);
 }
 
 function make_index_method($v) {
@@ -158,27 +156,4 @@ public function destroy('.$v["nome_classe"].' $'.$v['nome_classe_min'].')
     return redirect("/' . $v['nome_classe_min'] . '");
 }
     ');
-}
-
-function make_runValidate_method($v)
-{
-    echo('
-/**
- * Performs the validations in the request.
- *
- * @param  \Illuminate\Http\Request  $request
- */
-private function runValidate(Request $request)
-{
-    $request->validate([
-    ');
-    echo "\n";//pula a linha
-    //criando as validações
-foreach ($v["atributos"] as $atributo) {
-    echo "        '$atributo' => 'required|min:4|max:191',";
-    echo "\n";//pula a linha
-}
-    echo "\n";//pula a linha
-    echo('    ]);');
-    echo "\n}";
 }
