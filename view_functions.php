@@ -15,6 +15,7 @@ $height = 1500; ?>
 <h1><?= $nome_classe . 's' ?></h1>
 @stop
 
+@section('content')
 @include('messages.msgs')
 
 <a href="{{ url('/<?= $nome_classe_min ?>/create') }}" class="btn btn-lg btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Novo cadastro</a>
