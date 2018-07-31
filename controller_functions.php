@@ -58,7 +58,6 @@ function make_store_method($v) {
  */
 public function store(' . $v['nome_classe'] . 'Request $request)
 {
-    $this->runValidate($request);
     ');
     echo('
     $' . $v['nome_classe_min'] . ' = new ' . $v['nome_classe'] . '();
@@ -122,7 +121,6 @@ function make_update_method($v) {
  */
 public function update(' . $v['nome_classe'] . 'Request $request, '.$v["nome_classe"].' $'.$v['nome_classe_min'].')
 {
-    $this->runValidate($request);
     ');
     echo "\n";//pula a linha
     //preenchendo os atributos do objeto recém atualizado
